@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memes/views/categoria/categoria_list_view.dart';
+
+import 'package:memes/views/tipovehiculo/tipovehiculo_list_view.dart';
 // import 'package:memes/config/theme/app_theme.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: <Widget>[
-        const CategoriaListView(),
+        const TipoVehiculoListView(),
 
         /// Notifications page
         const Padding(

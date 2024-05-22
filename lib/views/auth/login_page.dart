@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   String _message = '';
 
   Future<void> login() async {
-    const String apiUrl = 'http://192.168.12.216/memesapp/public/api/v1/login';
+    const String apiUrl = 'http://192.168.18.243/memesapp/public/api/v1/login';
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
 
