@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:memes/views/factura/factura_list_view.dart';
 
 import 'package:memes/views/tipovehiculo/tipovehiculo_list_view.dart';
-// import 'package:memes/config/theme/app_theme.dart';
+//import 'package:memes/config/theme/app_theme.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -22,13 +23,18 @@ class _MyHomePageState extends State<MyHomePage> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.amber,
+        indicatorColor: const Color.fromARGB(255, 32, 126, 220),
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
             label: 'Home',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.free_cancellation_rounded),
+            label: 'Factura',
           ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.notifications_sharp)),
@@ -44,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: <Widget>[
+        const FacturaListView(),
         const TipoVehiculoListView(),
 
         /// Notifications page
@@ -68,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
+        // const TipoVehiculoListView(),
 
         /// Messages page
         ListView.builder(

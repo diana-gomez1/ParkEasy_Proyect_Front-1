@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,9 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   String _message = '';
 
   Future<void> login() async {
-    //const String apiUrl = 'http://192.168.18.243/memesapp/public/api/v1/login';
-    // Red Docentes
-    const String apiUrl = 'http://10.10.17.154/memesapp/public/api/v1/login';
+    const String apiUrl = 'http://192.168.12.216/memesapp/public/api/v1/login';
 
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
@@ -37,25 +36,18 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (response.statusCode == 200) {
-        // El inicio de sesión fue exitoso
         final Map<String, dynamic> responseData = json.decode(response.body);
-        // Guardar los datos del usuario y el token en Shared Preferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(
-            'userData',
-            json.encode(
-                responseData)); // Guarda los datos del usuario y el token como JSON
+        prefs.setString('userData', json.encode(responseData));
         // ignore: use_build_context_synchronously
         GoRouter.of(context).go('/home');
       } else {
-        // El servidor devolvió un error
         setState(() {
           _message =
               'Error al iniciar sesión. Por favor, verifica tus credenciales.';
         });
       }
     } catch (error) {
-      // Se produjo un error durante la solicitud
       setState(() {
         _message = 'Error: $error';
       });
@@ -75,26 +67,57 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(
+                labelText: 'Email',
+                labelStyle: GoogleFonts.montserratAlternates(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              style: GoogleFonts.montserratAlternates(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                labelText: 'Password',
+                labelStyle: GoogleFonts.montserratAlternates(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              style: GoogleFonts.montserratAlternates(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
               obscureText: true,
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: login,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 12.0),
+                textStyle: GoogleFonts.montserratAlternates(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               child: const Text('Login'),
             ),
             ElevatedButton(
-              // onPressed: () {
-              //   Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => const RegisterPage(),
-              //   ));
-              // },
               onPressed: () => context.push('/register'),
-              child: const Text('register'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 12.0),
+                textStyle: GoogleFonts.montserratAlternates(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              child: const Text('Register'),
             ),
             const SizedBox(height: 10.0),
             Text(

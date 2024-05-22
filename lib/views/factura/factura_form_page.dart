@@ -1,42 +1,39 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:memes/models/tipovehiculo.dart';
-import 'package:memes/services/api_services_tipovehiculo.dart';
+import 'package:memes/models/factura.dart';
+import 'package:memes/services/api_services_factura.dart';
 import 'package:memes/config/theme/app_theme.dart';
 
-class TipoVehiculoFormPage extends StatefulWidget {
-  final TipoVehiculo? tipoVehiculo;
+class FacturaFormPage extends StatefulWidget {
+  final Factura? factura;
 
-  const TipoVehiculoFormPage({super.key, this.tipoVehiculo});
+  const FacturaFormPage({super.key, this.factura});
 
   @override
-  State<TipoVehiculoFormPage> createState() => _TipoVehiculoFormPageState();
+  _FacturaFormPageState createState() => _FacturaFormPageState();
 }
 
-class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
+class _FacturaFormPageState extends State<FacturaFormPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _idController;
-  late TextEditingController _nombreController;
-  late TextEditingController _valorHoraController;
-  late TextEditingController _valorDiaController;
-  late TextEditingController _valorMesController;
+  late TextEditingController _placaVehiculoController;
+  late TextEditingController _montoPagarController;
+  late TextEditingController _fechaSalidaController;
 
   @override
   void initState() {
     super.initState();
-    _idController = TextEditingController(
-        text: widget.tipoVehiculo?.idVehiculo.toString() ?? '');
-    _nombreController =
-        TextEditingController(text: widget.tipoVehiculo?.nombre ?? '');
-    _valorHoraController = TextEditingController(
-        text: widget.tipoVehiculo?.valorHora.toString() ?? '');
-    _valorDiaController = TextEditingController(
-        text: widget.tipoVehiculo?.valorDia.toString() ?? '');
-    _valorMesController = TextEditingController(
-        text: widget.tipoVehiculo?.valorMes.toString() ?? '');
+    _idController =
+        TextEditingController(text: widget.factura?.idFactura.toString() ?? '');
+    _placaVehiculoController =
+        TextEditingController(text: widget.factura?.placaVehiculo ?? '');
+    _montoPagarController = TextEditingController(
+        text: widget.factura?.montoPagar.toString() ?? '');
+    _fechaSalidaController = TextEditingController(
+        text: widget.factura?.fechaSalida.toString() ?? '');
   }
 
   @override
@@ -45,9 +42,8 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
       data: AppTheme().getTheme(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.tipoVehiculo == null
-              ? 'Crear Tipo de Vehículo'
-              : 'Editar Tipo de Vehículo'),
+          title:
+              Text(widget.factura == null ? 'Crear Factura' : 'Editar Factura'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -58,7 +54,7 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                 TextFormField(
                   controller: _idController,
                   decoration: InputDecoration(
-                    labelText: 'ID del Vehículo',
+                    labelText: 'ID de la Factura',
                     border: const OutlineInputBorder(),
                     labelStyle: GoogleFonts.montserratAlternates(
                       fontSize: 16,
@@ -72,16 +68,16 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese la ID del vehículo';
+                      return 'Por favor ingrese el ID de la factura';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _nombreController,
+                  controller: _placaVehiculoController,
                   decoration: InputDecoration(
-                    labelText: 'Nombre',
+                    labelText: 'Placa del Vehículo',
                     border: const OutlineInputBorder(),
                     labelStyle: GoogleFonts.montserratAlternates(
                       fontSize: 16,
@@ -94,16 +90,16 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un nombre';
+                      return 'Por favor ingrese la placa del vehículo';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _valorHoraController,
+                  controller: _montoPagarController,
                   decoration: InputDecoration(
-                    labelText: 'Valor por hora',
+                    labelText: 'Monto a Pagar',
                     border: const OutlineInputBorder(),
                     labelStyle: GoogleFonts.montserratAlternates(
                       fontSize: 16,
@@ -116,7 +112,7 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un valor';
+                      return 'Por favor ingrese el monto a pagar';
                     }
                     return null;
                   },
@@ -125,9 +121,9 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _valorDiaController,
+                  controller: _fechaSalidaController,
                   decoration: InputDecoration(
-                    labelText: 'Valor por día',
+                    labelText: 'Fecha de Salida',
                     border: const OutlineInputBorder(),
                     labelStyle: GoogleFonts.montserratAlternates(
                       fontSize: 16,
@@ -140,54 +136,26 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un valor';
+                      return 'Por favor ingrese la fecha de salida';
                     }
                     return null;
                   },
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _valorMesController,
-                  decoration: InputDecoration(
-                    labelText: 'Valor por mes',
-                    border: const OutlineInputBorder(),
-                    labelStyle: GoogleFonts.montserratAlternates(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: GoogleFonts.montserratAlternates(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un valor';
-                    }
-                    return null;
-                  },
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      final tipoVehiculo = TipoVehiculo(
-                        idVehiculo: int.parse(_idController.text),
-                        nombre: _nombreController.text,
-                        valorHora: double.parse(_valorHoraController.text),
-                        valorDia: double.parse(_valorDiaController.text),
-                        valorMes: double.parse(_valorMesController.text),
+                      final factura = Factura(
+                        idFactura: int.parse(_idController.text),
+                        placaVehiculo: _placaVehiculoController.text,
+                        montoPagar: double.parse(_montoPagarController.text),
+                        fechaSalida:
+                            DateTime.parse(_fechaSalidaController.text),
                       );
-                      if (widget.tipoVehiculo == null) {
-                        await ApiServicetipovehiculo()
-                            .createTipoVehiculo(tipoVehiculo);
+                      if (widget.factura == null) {
+                        await ApiServiceFactura().createFactura(factura);
                       } else {
-                        await ApiServicetipovehiculo()
-                            .updateTipoVehiculo(tipoVehiculo);
+                        await ApiServiceFactura().updateFactura(factura);
                       }
                       context.go('/home');
                     }
@@ -198,8 +166,7 @@ class _TipoVehiculoFormPageState extends State<TipoVehiculoFormPage> {
                     textStyle: GoogleFonts.montserratAlternates(
                         fontSize: 18, fontWeight: FontWeight.w700),
                   ),
-                  child: Text(
-                      widget.tipoVehiculo == null ? 'Crear' : 'Actualizar'),
+                  child: Text(widget.factura == null ? 'Crear' : 'Actualizar'),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
