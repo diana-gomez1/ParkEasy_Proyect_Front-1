@@ -4,7 +4,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiServicetipovehiculo {
-  static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+  // CASA
+  //static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+  // Red Docentes
+  static const String baseUrl = 'http://10.10.17.154/memesapp/public/api/v1';
 
   Future<List<TipoVehiculo>> getTipoVehiculo() async {
     final response = await http.get(Uri.parse('$baseUrl/tipovehiculosver'));

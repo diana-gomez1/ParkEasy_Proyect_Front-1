@@ -16,8 +16,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String _message = '';
 
   Future<void> _register() async {
-    const String apiUrl =
-        'http://192.168.18.243/memesapp/public/api/v1/register';
+    /// const String apiUrl =
+    //    'http://192.168.18.243/memesapp/public/api/v1/register';
+    // RED DOCENTES
+    const String apiUrl = 'http://10.10.17.154/memesapp/public/api/v1/register';
     final String name = _nameController.text.trim();
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
