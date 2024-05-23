@@ -10,7 +10,7 @@ import 'package:memes/config/theme/app_theme.dart';
 class FacturaFormPage extends StatefulWidget {
   final Factura? factura;
 
-  const FacturaFormPage({super.key, this.factura});
+  const FacturaFormPage({Key? key, this.factura}) : super(key: key);
 
   @override
   _FacturaFormPageState createState() => _FacturaFormPageState();
@@ -118,28 +118,6 @@ class _FacturaFormPageState extends State<FacturaFormPage> {
                   },
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _fechaSalidaController,
-                  decoration: InputDecoration(
-                    labelText: 'Fecha de Salida',
-                    border: const OutlineInputBorder(),
-                    labelStyle: GoogleFonts.montserratAlternates(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: GoogleFonts.montserratAlternates(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese la fecha de salida';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(

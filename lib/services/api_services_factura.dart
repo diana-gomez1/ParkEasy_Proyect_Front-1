@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 
 class ApiServiceFactura {
   // CASA
-  //static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+  static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
   // Red Docentes
-  static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
+  // static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
 
   Future<List<Factura>> getFacturas() async {
     final response = await http.get(Uri.parse('$baseUrl/facturaver'));
@@ -33,7 +33,7 @@ class ApiServiceFactura {
 
   Future<Factura> getFactura(int idFactura) async {
     final response =
-        await http.get(Uri.parse('$baseUrl/facturaagregar/$idFactura'));
+        await http.get(Uri.parse('$baseUrl/facturabuscar/$idFactura'));
     if (response.statusCode == 200) {
       return Factura.fromJson(json.decode(response.body));
     } else {

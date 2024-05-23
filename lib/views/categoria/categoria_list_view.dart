@@ -51,7 +51,7 @@ class _CategoriaListViewState extends State<CategoriaListView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.push('/create');
+          context.push('/facturaagregar');
         },
         child: const Icon(Icons.add),
       ),

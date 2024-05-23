@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +8,7 @@ import 'package:memes/config/theme/app_theme.dart';
 class TipoVehiculoFormPage extends StatefulWidget {
   final TipoVehiculo? tipoVehiculo;
 
-  const TipoVehiculoFormPage({super.key, this.tipoVehiculo});
+  const TipoVehiculoFormPage({Key? key, this.tipoVehiculo}) : super(key: key);
 
   @override
   State<TipoVehiculoFormPage> createState() => _TipoVehiculoFormPageState();

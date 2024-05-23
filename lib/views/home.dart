@@ -50,8 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: <Widget>[
-        const FacturaListView(),
         const TipoVehiculoListView(),
+        const FacturaListView(),
 
         /// Notifications page
         const Padding(
