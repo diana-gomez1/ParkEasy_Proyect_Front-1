@@ -13,7 +13,7 @@ class EstablecimientoDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Detalles de establecimientos')),
       body: FutureBuilder<Establecimiento>(
-        future: ApiServiceestablecimiento().getEstablecimientos(id),
+        future: ApiServiceEstablecimiento().getEstablecimientos(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -44,7 +44,8 @@ class EstablecimientoDetailPage extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.edit),
                         onPressed: () {
-                          context.push('/edit/${establecimiento.idEstablecimiento}');
+                          context.push(
+                              '/edit/${establecimiento.idEstablecimiento}');
                         },
                       ),
                       IconButton(

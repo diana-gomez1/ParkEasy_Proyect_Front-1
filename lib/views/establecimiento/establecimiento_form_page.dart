@@ -13,7 +13,8 @@ class EstablecimientoFormPage extends StatefulWidget {
   const EstablecimientoFormPage({super.key, this.establecimiento});
 
   @override
-  State<EstablecimientoFormPage> createState() => _EstablecimientoFormPageState();
+  State<EstablecimientoFormPage> createState() =>
+      _EstablecimientoFormPageState();
 }
 
 class _EstablecimientoFormPageState extends State<EstablecimientoFormPage> {
@@ -29,13 +30,13 @@ class _EstablecimientoFormPageState extends State<EstablecimientoFormPage> {
     super.initState();
     _idEstablecimientoController = TextEditingController(
         text: widget.establecimiento?.idEstablecimiento.toString() ?? '');
-    _nombreEstablecimientoController =
-        TextEditingController(text: widget.establecimiento?.nombreEstablecimiento ?? '');
-    _descripcionController = 
+    _nombreEstablecimientoController = TextEditingController(
+        text: widget.establecimiento?.nombreEstablecimiento ?? '');
+    _descripcionController =
         TextEditingController(text: widget.establecimiento?.descripcion ?? '');
-    _direccionController = 
+    _direccionController =
         TextEditingController(text: widget.establecimiento?.direccion ?? '');
-    _nitController = 
+    _nitController =
         TextEditingController(text: widget.establecimiento?.nit ?? '');
   }
 
@@ -176,17 +177,19 @@ class _EstablecimientoFormPageState extends State<EstablecimientoFormPage> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       final establecimiento = Establecimiento(
-                        idEstablecimiento: int.parse(_idEstablecimientoController.text),
-                        nombreEstablecimiento: _nombreEstablecimientoController.text,
+                        idEstablecimiento:
+                            int.parse(_idEstablecimientoController.text),
+                        nombreEstablecimiento:
+                            _nombreEstablecimientoController.text,
                         descripcion: _descripcionController.text,
                         direccion: _direccionController.text,
                         nit: _nitController.text,
                       );
                       if (widget.establecimiento == null) {
-                        await ApiServiceestablecimiento()
+                        await ApiServiceEstablecimiento()
                             .createEstablecimiento(establecimiento);
                       } else {
-                        await ApiServiceestablecimiento()
+                        await ApiServiceEstablecimiento()
                             .updateEstablecimiento(establecimiento);
                       }
                       context.go('/home');

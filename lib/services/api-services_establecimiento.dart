@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:memes/models/establecimiento.dart';
-import 'dart:convert';
+import 'dart:convert' show json;
 import 'package:http/http.dart' as http;
 
-class ApiServiceestablecimiento {
+class ApiServiceEstablecimiento {
   // CASA
   static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
   // Red Docentes
@@ -30,8 +30,8 @@ class ApiServiceestablecimiento {
   }
 
   Future<Establecimiento> getEstablecimientos(int idEstablecimiento) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/establecimientos/$idEstablecimiento'));
+    final response = await http
+        .get(Uri.parse('$baseUrl/establecimientos/$idEstablecimiento'));
     if (response.statusCode == 200) {
       return Establecimiento.fromJson(json.decode(response.body));
     } else {

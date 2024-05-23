@@ -11,7 +11,8 @@ class EstablecimientoListView extends StatefulWidget {
   const EstablecimientoListView({super.key});
 
   @override
-  State<EstablecimientoListView> createState() => _EstablecimientoListViewState();
+  State<EstablecimientoListView> createState() =>
+      _EstablecimientoListViewState();
 }
 
 class _EstablecimientoListViewState extends State<EstablecimientoListView> {
@@ -20,7 +21,7 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
   @override
   void initState() {
     super.initState();
-    futureEstablecimientos = ApiServiceestablecimiento().getEstablecimiento();
+    futureEstablecimientos = ApiServiceEstablecimiento().getEstablecimiento();
   }
 
   @override
@@ -74,13 +75,13 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
                                 TextButton(
                                   onPressed: () async {
                                     try {
-                                      await ApiServiceestablecimiento()
+                                      await ApiServiceEstablecimiento()
                                           .deleteEstablecimiento(
                                         establecimiento.idEstablecimiento,
                                       );
                                       setState(() {
                                         futureEstablecimientos =
-                                            ApiServiceestablecimiento()
+                                            ApiServiceEstablecimiento()
                                                 .getEstablecimiento();
                                       });
                                       Navigator.of(context).pop();
