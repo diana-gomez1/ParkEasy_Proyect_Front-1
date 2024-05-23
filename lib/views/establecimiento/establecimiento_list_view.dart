@@ -1,14 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/models/establecimiento.dart';
 import 'package:memes/services/api-services_establecimiento.dart';
-import 'package:memes/config/theme/app_theme.dart';
 
 class EstablecimientoListView extends StatefulWidget {
-  const EstablecimientoListView({super.key});
+  const EstablecimientoListView({Key? key}) : super(key: key);
 
   @override
   State<EstablecimientoListView> createState() =>
@@ -27,7 +23,7 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Establecimientos')),
+      appBar: AppBar(title: const Text('Info establecimiento')),
       body: FutureBuilder<List<Establecimiento>>(
         future: futureEstablecimientos,
         builder: (context, snapshot) {
@@ -35,115 +31,134 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+                child: Text('No se encontraron establecimientos'));
           } else {
             final establecimientos = snapshot.data!;
-            return ListView.builder(
-              itemCount: establecimientos.length,
-              itemBuilder: (context, index) {
-                final establecimiento = establecimientos[index];
-                return ExpansionTile(
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${establecimiento.idEstablecimiento}: ${establecimiento.nombreEstablecimiento}',
-                              style:
-                                  AppTheme().getTheme().textTheme.titleMedium,
-                            ),
-                          ],
+            if (establecimientos.length == 1) {
+              final establecimiento = establecimientos[0];
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(19),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildInfoRow(
+                      'Nombre:',
+                      establecimiento.nombreEstablecimiento,
+                      fontSizeLabel: 22,
+                      fontWeightLabel: FontWeight.bold,
+                      fontSizeValue: 20,
+                      fontWeightValue: FontWeight.normal,
+                    ),
+                    _buildInfoRow(
+                      'Dirección:',
+                      establecimiento.direccion,
+                      fontSizeLabel: 22,
+                      fontWeightLabel: FontWeight.bold,
+                      fontSizeValue: 20,
+                      fontWeightValue: FontWeight.normal,
+                    ),
+                    _buildInfoRow(
+                      'NIT:',
+                      establecimiento.nit,
+                      fontSizeLabel: 22,
+                      fontWeightLabel: FontWeight.bold,
+                      fontSizeValue: 20,
+                      fontWeightValue: FontWeight.normal,
+                    ),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Descripción',
+                        style: GoogleFonts.montserratAlternates(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () async {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Confirmación'),
-                              content: const Text(
-                                '¿Estás seguro de que deseas eliminar este establecimiento?',
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Cancelar'),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    try {
-                                      await ApiServiceEstablecimiento()
-                                          .deleteEstablecimiento(
-                                        establecimiento.idEstablecimiento,
-                                      );
-                                      setState(() {
-                                        futureEstablecimientos =
-                                            ApiServiceEstablecimiento()
-                                                .getEstablecimiento();
-                                      });
-                                      Navigator.of(context).pop();
-                                      context.go('/home');
-                                    } catch (e) {
-                                      if (kDebugMode) {
-                                        print('Error al eliminar: $e');
-                                      }
-                                    }
-                                  },
-                                  child: const Text('Eliminar'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.delete_forever),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.go(
-                            '/edit/${establecimiento.idEstablecimiento}?nombre=${Uri.encodeComponent(establecimiento.nombreEstablecimiento)}',
-                          );
-                        },
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
-                  subtitle: Text(
-                    'Descripcion: \$${establecimiento.descripcion}',
-                    style: AppTheme().getTheme().textTheme.titleSmall,
-                  ),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Direccion: \$${establecimiento.direccion}',
-                            style: AppTheme().getTheme().textTheme.titleSmall,
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'NIT: \$${establecimiento.nit}',
-                            style: AppTheme().getTheme().textTheme.titleSmall,
-                          ),
-                        ],
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        establecimiento.descripcion,
+                        textAlign: TextAlign.start,
+                        style: GoogleFonts.montserratAlternates(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
-                );
-              },
-            );
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: establecimientos.length,
+                itemBuilder: (context, index) {
+                  final establecimiento = establecimientos[index];
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        '${establecimiento.idEstablecimiento}: ${establecimiento.nombreEstablecimiento}',
+                        style: GoogleFonts.montserratAlternates(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        'Descripcion${establecimiento.descripcion}',
+                        style: GoogleFonts.montserratAlternates(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go('/establecimientoagregar');
-        },
-        child: const Icon(Icons.add_box_sharp),
+    );
+  }
+
+  Widget _buildInfoRow(
+    String label,
+    String value, {
+    double fontSizeLabel = 20,
+    FontWeight fontWeightLabel = FontWeight.normal,
+    double fontSizeValue = 18,
+    FontWeight fontWeightValue = FontWeight.normal,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 150,
+            child: Text(
+              label,
+              style: GoogleFonts.montserratAlternates(
+                fontWeight: fontWeightLabel,
+                fontSize: fontSizeLabel,
+              ),
+            ),
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Text(
+              value,
+              style: GoogleFonts.montserratAlternates(
+                fontWeight: fontWeightValue,
+                fontSize: fontSizeValue,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
 
 import 'package:memes/views/tipovehiculo/tipovehiculo_list_view.dart';
@@ -41,11 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Notifications',
           ),
           NavigationDestination(
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.messenger_sharp),
-            ),
-            label: 'Messages',
+            selectedIcon: Icon(Icons.local_parking),
+            icon: Icon(Icons.free_cancellation_rounded),
+            label: 'Info',
           ),
         ],
       ),
@@ -75,43 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        // const TipoVehiculoListView(),
 
-        /// Messages page
-        ListView.builder(
-          reverse: true,
-          itemCount: 2,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: const Text(
-                    'Hello',
-                  ),
-                ),
-              );
-            }
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: const Text(
-                  'Hi!',
-                ),
-              ),
-            );
-          },
-        ),
+        const EstablecimientoListView(),
       ][currentPageIndex],
     );
   }

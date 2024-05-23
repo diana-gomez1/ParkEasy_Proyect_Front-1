@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+//import 'package:memes/models/establecimiento.dart';
 import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/models/factura.dart';
+//import 'package:memes/services/api-services_establecimiento.dart';
+import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_form_page.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
 import 'package:memes/views/factura/factura_detail_page.dart';
@@ -11,9 +14,13 @@ import 'package:memes/views/import_views.dart';
 final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
+    // GoRoute(
+    //   path: '/',
+    //   builder: (context, state) => const LoginPage(),
+    // ),
     GoRoute(
       path: '/',
-      builder: (context, state) => const LoginPage(),
+      builder: (context, state) => const MyHomePage(),
     ),
     GoRoute(
       path: '/register',
@@ -22,6 +29,11 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => const MyHomePage(),
+    ),
+    //Rutas establecimiento
+    GoRoute(
+      path: '/establecimientover',
+      builder: (context, state) => const EstablecimientoListView(),
     ),
     //*****RUTAS TIPOVEHICULOS*****
     GoRoute(
