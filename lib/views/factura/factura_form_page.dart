@@ -10,7 +10,7 @@ import 'package:memes/config/theme/app_theme.dart';
 class FacturaFormPage extends StatefulWidget {
   final Factura? factura;
 
-  const FacturaFormPage({Key? key, this.factura}) : super(key: key);
+  const FacturaFormPage({super.key, this.factura});
 
   @override
   _FacturaFormPageState createState() => _FacturaFormPageState();

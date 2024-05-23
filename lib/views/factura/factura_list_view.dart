@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +8,7 @@ import 'package:memes/services/api_services_factura.dart';
 import 'package:memes/config/theme/app_theme.dart';
 
 class FacturaListView extends StatefulWidget {
-  const FacturaListView({Key? key}) : super(key: key);
+  const FacturaListView({super.key});
 
   @override
   State<FacturaListView> createState() => _FacturaListViewState();
