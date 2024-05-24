@@ -10,7 +10,6 @@ import 'package:memes/views/caja/caja_form_page.dart'; // Importar la vista del 
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_form_page.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
-import 'package:memes/views/factura/factura_detail_page.dart';
 import 'package:memes/views/import_views.dart';
 
 // GoRouter configuration
@@ -116,13 +115,6 @@ final appRouter = GoRouter(
       builder: (context, state) => const FacturaListView(),
     ),
     GoRoute(
-      path: '/factura/:id_factura',
-      builder: (context, state) {
-        final idFactura = int.parse(state.pathParameters['id_factura']!);
-        return FacturaDetailPage(id: idFactura);
-      },
-    ),
-    GoRoute(
       path: '/facturaagregar',
       builder: (context, state) => const FacturaFormPage(),
     ),
@@ -139,9 +131,7 @@ final appRouter = GoRouter(
             idFactura: idFactura,
             placaVehiculo: placa ?? '',
             montoPagar: monto != null ? double.tryParse(monto) ?? 0.0 : 0.0,
-            fechaSalida: fecha != null
-                ? DateTime.tryParse(fecha) ?? DateTime.now()
-                : DateTime.now(),
+            fechaSalida: fecha != null ? DateTime.parse(fecha) : DateTime.now(),
           ),
         );
       },

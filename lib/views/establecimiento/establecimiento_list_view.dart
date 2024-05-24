@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/models/establecimiento.dart';
-import 'package:memes/services/api-services_establecimiento.dart';
+import 'package:memes/services/api_services_establecimiento.dart';
 
 class EstablecimientoListView extends StatefulWidget {
   const EstablecimientoListView({super.key});
