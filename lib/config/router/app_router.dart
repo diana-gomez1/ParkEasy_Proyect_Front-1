@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 //import 'package:memes/models/establecimiento.dart';
 import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/models/factura.dart';
+import 'package:memes/views/caja/caja_list_view.dart';
 //import 'package:memes/services/api-services_establecimiento.dart';
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_form_page.dart';
@@ -34,6 +35,11 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/establecimientover',
       builder: (context, state) => const EstablecimientoListView(),
+    ),
+    //Rutas caja
+    GoRoute(
+      path: '/cajaver',
+      builder: (context, state) => const CajaListView(),
     ),
     //*****RUTAS TIPOVEHICULOS*****
     GoRoute(

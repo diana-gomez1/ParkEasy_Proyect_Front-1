@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memes/views/caja/caja_list_view.dart';
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
 
@@ -39,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.notifications_sharp)),
-            label: 'Notifications',
+            label: 'Caja',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.local_parking),
@@ -52,29 +53,29 @@ class _MyHomePageState extends State<MyHomePage> {
         const TipoVehiculoListView(),
         const FacturaListView(),
 
-        /// Notifications page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-            ],
-          ),
-        ),
-
+        // /// Notifications page
+        // const Padding(
+        //   padding: EdgeInsets.all(8.0),
+        //   child: Column(
+        //     children: <Widget>[
+        //       Card(
+        //         child: ListTile(
+        //           leading: Icon(Icons.notifications_sharp),
+        //           title: Text('Notification 1'),
+        //           subtitle: Text('This is a notification'),
+        //         ),
+        //       ),
+        //       Card(
+        //         child: ListTile(
+        //           leading: Icon(Icons.notifications_sharp),
+        //           title: Text('Notification 2'),
+        //           subtitle: Text('This is a notification'),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        const CajaListView(),
         const EstablecimientoListView(),
       ][currentPageIndex],
     );
