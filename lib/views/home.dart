@@ -34,17 +34,18 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Home',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.receipt_rounded),
-            icon: Icon(Icons.free_cancellation_rounded),
+            selectedIcon: Icon(Icons.receipt_long),
+            icon: Icon(Icons.receipt_long_rounded),
             label: 'Factura',
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.notifications_sharp)),
+            selectedIcon: Icon(Icons.attach_money),
+            icon: Icon(Icons.attach_money_outlined),
             label: 'Caja',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.local_parking),
-            icon: Icon(Icons.free_cancellation_rounded),
+            icon: Icon(Icons.local_parking_rounded),
             label: 'Info',
           ),
         ],

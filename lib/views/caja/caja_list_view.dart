@@ -99,15 +99,7 @@ class _CajaListViewState extends State<CajaListView> {
                       IconButton(
                         onPressed: () {
                           context.go(
-                            '/edit/${caja_.idCaja}?nombreCaja=${Uri.encodeComponent(caja_.nombreCaja)}',
-                          );
-                        },
-                        icon: const Icon(Icons.edit),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.go(
-                            '/edit/${caja_.idCaja}?nombreAdmin=${Uri.encodeComponent(caja_.nombreAdmin)}',
+                            '/editcaja/${caja_.idCaja}?nombreCaja=${Uri.encodeComponent(caja_.nombreCaja)}&saldo=${caja_.saldo}&nombreAdmin=${Uri.encodeComponent(caja_.nombreAdmin)}',
                           );
                         },
                         icon: const Icon(Icons.edit),
@@ -126,7 +118,7 @@ class _CajaListViewState extends State<CajaListView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/cajaAgregar');
+          context.go('/cajaagregar');
         },
         child: const Icon(Icons.add_box_sharp),
       ),

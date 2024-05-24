@@ -65,7 +65,7 @@ class _FacturaListViewState extends State<FacturaListView> {
                         icon: const Icon(Icons.edit),
                         onPressed: () {
                           context.push(
-                            '/editfactura/${factura.idFactura}?placa=${factura.placaVehiculo}&monto=${factura.montoPagar}&fecha=${factura.fechaSalida.toIso8601String()}',
+                            '/editfactura/${factura.idFactura}?placa=${factura.placaVehiculo}&monto=${factura.montoPagar}&fecha=${factura.fechaSalida?.toString() ?? ''}',
                           );
                         },
                       ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-//import 'package:memes/models/establecimiento.dart';
+// import 'package:memes/models/establecimiento.dart';
 import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/models/factura.dart';
+import 'package:memes/models/caja.dart'; // Importar el modelo de Caja
 import 'package:memes/views/caja/caja_list_view.dart';
-//import 'package:memes/services/api-services_establecimiento.dart';
+import 'package:memes/views/caja/caja_form_page.dart'; // Importar la vista del formulario de Caja
+// import 'package:memes/services/api-services_establecimiento.dart';
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_form_page.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
@@ -31,17 +33,39 @@ final appRouter = GoRouter(
       path: '/home',
       builder: (context, state) => const MyHomePage(),
     ),
-    //Rutas establecimiento
+    // Rutas establecimiento
     GoRoute(
       path: '/establecimientover',
       builder: (context, state) => const EstablecimientoListView(),
     ),
-    //Rutas caja
+    // Rutas caja
     GoRoute(
       path: '/cajaver',
       builder: (context, state) => const CajaListView(),
     ),
-    //*****RUTAS TIPOVEHICULOS*****
+    GoRoute(
+      path: '/cajaagregar',
+      builder: (context, state) => const CajaFormPage(),
+    ),
+    GoRoute(
+      path: '/editcaja/:id_caja',
+      builder: (context, state) {
+        final idCaja = int.parse(state.pathParameters['id_caja']!);
+        final nombreCaja = state.uri.queryParameters['nombreCaja'];
+        final saldo = state.uri.queryParameters['saldo'];
+        final nombreAdmin = state.uri.queryParameters['nombreAdmin'];
+
+        return CajaFormPage(
+          caja: Caja(
+            idCaja: idCaja,
+            nombreCaja: nombreCaja ?? '',
+            saldo: saldo != null ? double.tryParse(saldo) ?? 0.0 : 0.0,
+            nombreAdmin: nombreAdmin ?? '',
+          ),
+        );
+      },
+    ),
+    // *****RUTAS TIPOVEHICULOS*****
     GoRoute(
       path: '/tipovehiculosver',
       builder: (context, state) => const TipoVehiculoListView(),
@@ -86,7 +110,7 @@ final appRouter = GoRouter(
         );
       },
     ),
-    //*****RUTAS FACTURAS*****
+    // *****RUTAS FACTURAS*****
     GoRoute(
       path: '/facturaver',
       builder: (context, state) => const FacturaListView(),
@@ -115,12 +139,13 @@ final appRouter = GoRouter(
             idFactura: idFactura,
             placaVehiculo: placa ?? '',
             montoPagar: monto != null ? double.tryParse(monto) ?? 0.0 : 0.0,
-            fechaSalida: fecha != null ? DateTime.parse(fecha) : DateTime.now(),
+            fechaSalida: fecha != null
+                ? DateTime.tryParse(fecha) ?? DateTime.now()
+                : DateTime.now(),
           ),
         );
       },
     ),
-
     GoRoute(
       path: '/deletefactura/:id_factura',
       builder: (context, state) {

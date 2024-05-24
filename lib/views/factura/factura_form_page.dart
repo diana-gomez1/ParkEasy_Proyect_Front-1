@@ -10,7 +10,7 @@ import 'package:memes/config/theme/app_theme.dart';
 class FacturaFormPage extends StatefulWidget {
   final Factura? factura;
 
-  const FacturaFormPage({super.key, this.factura});
+  const FacturaFormPage({Key? key, this.factura}) : super(key: key);
 
   @override
   _FacturaFormPageState createState() => _FacturaFormPageState();
@@ -33,7 +33,9 @@ class _FacturaFormPageState extends State<FacturaFormPage> {
     _montoPagarController = TextEditingController(
         text: widget.factura?.montoPagar.toString() ?? '');
     _fechaSalidaController = TextEditingController(
-        text: widget.factura?.fechaSalida.toString() ?? '');
+        text: widget.factura?.fechaSalida != null
+            ? widget.factura!.fechaSalida.toString()
+            : '');
   }
 
   @override
@@ -123,12 +125,16 @@ class _FacturaFormPageState extends State<FacturaFormPage> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      DateTime? fechaSalida;
+                      if (_fechaSalidaController.text.isNotEmpty) {
+                        fechaSalida =
+                            DateTime.parse(_fechaSalidaController.text);
+                      }
                       final factura = Factura(
                         idFactura: int.parse(_idController.text),
                         placaVehiculo: _placaVehiculoController.text,
                         montoPagar: double.parse(_montoPagarController.text),
-                        fechaSalida:
-                            DateTime.parse(_fechaSalidaController.text),
+                        fechaSalida: fechaSalida,
                       );
                       if (widget.factura == null) {
                         await ApiServiceFactura().createFactura(factura);

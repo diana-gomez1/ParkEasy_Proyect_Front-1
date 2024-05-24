@@ -10,7 +10,7 @@ class ApiServiceCaja {
   //static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
 
   Future<List<Caja>> getCaja() async {
-    final response = await http.get(Uri.parse('$baseUrl/cajaVer'));
+    final response = await http.get(Uri.parse('$baseUrl/cajaver'));
     if (response.statusCode == 200) {
       if (kDebugMode) {
         print('Response body: ${response.body}');
@@ -38,7 +38,7 @@ class ApiServiceCaja {
 
   Future<void> createCaja(Caja caja) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/cajaAgregar'),
+      Uri.parse('$baseUrl/cajaagregar'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(caja.toJson()),
     );
@@ -49,7 +49,7 @@ class ApiServiceCaja {
 
   Future<void> updateCaja(Caja caja) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/CajaAct'),
+      Uri.parse('$baseUrl/cajaact'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(caja.toJson()),
     );
@@ -60,7 +60,7 @@ class ApiServiceCaja {
 
   Future<void> deleteCaja(int idCaja) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/cajaDestroy/$idCaja'),
+      Uri.parse('$baseUrl/cajadestroy/$idCaja'),
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to delete Caja');
