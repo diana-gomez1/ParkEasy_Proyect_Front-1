@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memes/models/factura.dart';
+import 'package:memes/services/api_services_caja.dart';
 import 'package:memes/services/api_services_factura.dart';
 import 'package:memes/config/theme/app_theme.dart';
+import 'package:memes/views/home.dart';
 
 class FacturaListView extends StatefulWidget {
   const FacturaListView({super.key});
@@ -21,6 +23,38 @@ class _FacturaListViewState extends State<FacturaListView> {
   void initState() {
     super.initState();
     futureFacturas = ApiServiceFactura().getFacturas();
+  }
+
+  // Método para eliminar una factura y actualizar el saldo de la caja
+  Future<void> _deleteFacturaAndRefreshSaldo(int idFactura) async {
+    try {
+      await ApiServiceFactura().deleteFactura(idFactura);
+      // Después de eliminar la factura, actualiza el saldo
+      await _fetchSaldoCaja();
+      // Luego, actualiza la lista de facturas
+      setState(() {
+        futureFacturas = ApiServiceFactura().getFacturas();
+      });
+      Navigator.of(context).pop();
+      context.go('/home');
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error al eliminar: $e');
+      }
+    }
+  }
+
+  // Método para obtener el saldo de la caja desde la API
+  Future<void> _fetchSaldoCaja() async {
+    try {
+      final saldo = await ApiServiceCaja().getSaldoCaja(1); // ID de la caja
+      // Actualiza el saldo usando el controller
+      SaldoController().actualizarSaldo(saldo);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error al obtener saldo de caja: $e');
+      }
+    }
   }
 
   @override
@@ -88,20 +122,9 @@ class _FacturaListViewState extends State<FacturaListView> {
                                 ),
                                 TextButton(
                                   onPressed: () async {
-                                    try {
-                                      await ApiServiceFactura()
-                                          .deleteFactura(factura.idFactura);
-                                      setState(() {
-                                        futureFacturas =
-                                            ApiServiceFactura().getFacturas();
-                                      });
-                                      Navigator.of(context).pop();
-                                      context.go('/home');
-                                    } catch (e) {
-                                      if (kDebugMode) {
-                                        print('Error al eliminar: $e');
-                                      }
-                                    }
+                                    // Llama al método para eliminar la factura y actualizar el saldo
+                                    await _deleteFacturaAndRefreshSaldo(
+                                        factura.idFactura);
                                   },
                                   child: const Text('Eliminar'),
                                 ),

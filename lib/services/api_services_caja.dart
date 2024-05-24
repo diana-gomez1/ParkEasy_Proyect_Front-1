@@ -36,6 +36,23 @@ class ApiServiceCaja {
     }
   }
 
+  Future<double> getSaldoCaja(int idCaja) async {
+    final response = await http.get(Uri.parse('$baseUrl/cajabuscar/$idCaja'));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final saldoString =
+          jsonData['caja']['saldo']; // Accede al saldo dentro del objeto 'caja'
+      final saldo = double.tryParse(saldoString);
+      if (saldo != null) {
+        return saldo;
+      } else {
+        throw Exception('Failed to parse saldo');
+      }
+    } else {
+      throw Exception('Failed to load caja');
+    }
+  }
+
   Future<void> createCaja(Caja caja) async {
     final response = await http.post(
       Uri.parse('$baseUrl/cajaagregar'),
