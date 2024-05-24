@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memes/models/espacioestacionamiento.dart';
@@ -11,9 +13,11 @@ class EspacioEstacionamientoDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Detalles del Espacio de Estacionamiento')),
+      appBar:
+          AppBar(title: const Text('Detalles del Espacio de Estacionamiento')),
       body: FutureBuilder<EspacioEstacionamiento>(
-        future: ApiServiceEspacioEstacionamiento().getEspacioEstacionamiento(id),
+        future:
+            ApiServiceEspacioEstacionamiento().getEspacioEstacionamiento(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -54,14 +58,17 @@ class EspacioEstacionamientoDetailPage extends StatelessWidget {
                             builder: (context) {
                               return AlertDialog(
                                 title: const Text('Confirmar eliminación'),
-                                content: const Text('¿Estás seguro de que deseas eliminar este espacio de estacionamiento?'),
+                                content: const Text(
+                                    '¿Estás seguro de que deseas eliminar este espacio de estacionamiento?'),
                                 actions: [
                                   TextButton(
-                                    onPressed: () => Navigator.pop(context, false),
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
                                     child: const Text('Cancelar'),
                                   ),
                                   TextButton(
-                                    onPressed: () => Navigator.pop(context, true),
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
                                     child: const Text('Eliminar'),
                                   ),
                                 ],
@@ -69,7 +76,9 @@ class EspacioEstacionamientoDetailPage extends StatelessWidget {
                             },
                           );
                           if (shouldDelete == true) {
-                            await ApiServiceEspacioEstacionamiento().deleteEspacioEstacionamiento(espacio.idEspacio);
+                            await ApiServiceEspacioEstacionamiento()
+                                .deleteEspacioEstacionamiento(
+                                    espacio.idEspacio);
                             context.pop();
                           }
                         },

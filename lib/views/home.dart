@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Home',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
+            selectedIcon: Icon(Icons.receipt_rounded),
             icon: Icon(Icons.free_cancellation_rounded),
             label: 'Factura',
           ),
