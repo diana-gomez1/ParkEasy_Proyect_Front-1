@@ -46,7 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
       SaldoController(); // Crear instancia de SaldoController
 
   // Método para obtener el saldo de la caja desde la API
-  // Método para obtener el saldo de la caja desde la API
   Future<void> _fetchSaldoCaja() async {
     try {
       final saldo = await ApiServiceCaja().getSaldoCaja(1); // ID de la caja
@@ -71,13 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ParkEasy APP'),
+        title: const Text('ParkEasy'),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               children: [
-                const Icon(Icons.attach_money),
+                const Icon(Icons.attach_money,
+                    color: Color.fromARGB(255, 56, 244, 18)),
                 const SizedBox(width: 4),
                 StreamBuilder<double>(
                   stream: saldoController
@@ -85,13 +85,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Text(
-                        'Saldo: \$${snapshot.data!.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 16),
+                        'Saldo \$${snapshot.data!.toStringAsFixed(0)}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20, // Tamaño de fuente deseado
+                              color: const Color.fromARGB(255, 73, 128, 237),
+                            ),
                       );
                     } else {
-                      return const Text(
-                        'Saldo: \$0.00',
-                        style: TextStyle(fontSize: 16),
+                      return Text(
+                        'Saldo \$0',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20, // Tamaño de fuente deseado
+                              color: const Color.fromARGB(255, 73, 128, 237),
+                            ),
                       );
                     }
                   },

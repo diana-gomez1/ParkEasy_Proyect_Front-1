@@ -4,7 +4,7 @@ import 'package:memes/models/establecimiento.dart';
 import 'package:memes/services/api_services_establecimiento.dart';
 
 class EstablecimientoListView extends StatefulWidget {
-  const EstablecimientoListView({Key? key}) : super(key: key);
+  const EstablecimientoListView({super.key});
 
   @override
   State<EstablecimientoListView> createState() =>
