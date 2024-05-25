@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:memes/models/ingreso_vehiculos.dart';
 import 'package:memes/services/api_services_ingresovehiculos.dart';
 
@@ -39,7 +40,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: IconButton(
               icon: const Icon(
-                Icons.add_box_sharp,
+                Icons.add_circle_outline_sharp,
                 color: Color.fromARGB(255, 24, 99, 250),
               ),
               onPressed: () {
@@ -75,38 +76,86 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
   }
 
   Widget _buildIngresoVehiculoCard(IngresoVehiculos ingresoVehiculo) {
+    const placaText = 'Placa del Vehículo: ';
+    final placaValue = ingresoVehiculo.placaVehiculo;
+
+    // Formatea la fecha de ingreso
+    final fechaIngreso = DateFormat('HH:mm dd/MM')
+        .format(DateTime.parse(ingresoVehiculo.fechaIngreso));
+
     return Card(
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
-        title: Text(
-          'Placa del Vehículo: ${ingresoVehiculo.placaVehiculo}',
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                fontSize: 18,
+        contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+        title: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: placaText,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontSize: 21,
+                      color: const Color.fromARGB(255, 24, 99, 250),
+                    ),
               ),
+              TextSpan(
+                text: placaValue,
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontSize: 18,
+                      color: const Color.fromARGB(255, 0, 0,
+                          0), // Cambia el color del número de placa aquí
+                    ),
+              ),
+            ],
+          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Fecha de Ingreso: ${ingresoVehiculo.fechaIngreso}',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontSize: 18,
+            RichText(
+              text: TextSpan(
+                text: 'Fecha de Ingreso: ',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontSize: 21,
+                      color: const Color.fromARGB(255, 24, 99, 250),
+                    ),
+                children: [
+                  TextSpan(
+                    text: fechaIngreso, // Utiliza la fecha formateada aquí
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          fontSize: 18,
+                          color: const Color.fromARGB(255, 0, 0,
+                              0), // Cambia el color de la fecha de ingreso aquí
+                        ),
                   ),
+                ],
+              ),
             ),
-            Text(
-              'Tipo de Vehículo: ${ingresoVehiculo.tipoVehiculo}',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontSize: 18,
+            RichText(
+              text: TextSpan(
+                text: 'Tipo de Vehículo: ',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontSize: 21,
+                      color: const Color.fromARGB(255, 24, 99, 250),
+                    ),
+                children: [
+                  TextSpan(
+                    text: ingresoVehiculo.tipoVehiculo,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          fontSize: 18,
+                          color: const Color.fromARGB(255, 0, 0,
+                              0), // Cambia el color del tipo de vehículo aquí
+                        ),
                   ),
+                ],
+              ),
             ),
           ],
         ),
         trailing: IconButton(
-          onPressed: () {
-            _showDeleteConfirmationDialog(ingresoVehiculo);
-          },
-          icon: const Icon(Icons.delete),
-        ),
+            onPressed: () {
+              _showDeleteConfirmationDialog(ingresoVehiculo);
+            },
+            icon: const Icon(Icons.delete_forever_outlined),
+            color: const Color.fromARGB(255, 24, 99, 250)),
       ),
     );
   }

@@ -1,15 +1,19 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memes/models/ingreso_vehiculos.dart';
+//import 'package:memes/models/tipo_vehiculo.dart'; // Importa el modelo TipoVehiculo
+import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/services/api_services_espacioestacionamiento.dart';
 import 'package:memes/services/api_services_ingresovehiculos.dart';
+import 'package:memes/services/api_services_tipovehiculo.dart';
 
 class IngresoVehiculoFormPage extends StatefulWidget {
-  const IngresoVehiculoFormPage(
-      {super.key}); // Corregido el error de la definición del constructor
+  const IngresoVehiculoFormPage({
+    super.key,
+  });
 
   @override
   _IngresoVehiculoFormPageState createState() =>
@@ -26,12 +30,17 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
 
   List<int> _espaciosDisponibles = [];
 
+  List<TipoVehiculo> _tiposVehiculos =
+      []; // Lista para almacenar los tipos de vehículos
+  TipoVehiculo?
+      _selectedTipoVehiculo; // Variable para almacenar el tipo de vehículo seleccionado
+
   @override
   void initState() {
     super.initState();
-    _fechaIngresoController.text =
-        DateTime.now().toString(); // Genera automáticamente la fecha de ingreso
+    _fechaIngresoController.text = DateTime.now().toString();
     _fetchEspaciosDisponibles();
+    _fetchTiposVehiculos(); // Llama a la función para obtener los tipos de vehículos
   }
 
   Future<void> _fetchEspaciosDisponibles() async {
@@ -49,8 +58,22 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
         print('Error al obtener espacios disponibles: $e');
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al obtener espacios disponibles: $e')),
+        SnackBar(
+          content: Text('Error al obtener espacios disponibles: $e'),
+        ),
       );
+    }
+  }
+
+  Future<void> _fetchTiposVehiculos() async {
+    try {
+      final tipos = await ApiServicetipovehiculo()
+          .getTipoVehiculo(); // Reemplaza ApiServiceTipoVehiculo con tu servicio real
+      setState(() {
+        _tiposVehiculos = tipos;
+      });
+    } catch (e) {
+      // Manejo de errores
     }
   }
 
@@ -61,7 +84,6 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
         title: Text(
           'Agregar Ingreso Vehículo',
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                // Corregido el uso de `titleMedium` por `headline6`
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 24, 99, 250),
               ),
@@ -80,11 +102,17 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
               _buildTextField(
                 controller: _fechaIngresoController,
                 label: 'Fecha de Ingreso',
-                enabled: false, // Deshabilitado para que no se pueda editar
+                enabled: false,
               ),
-              _buildTextField(
-                controller: _tipoVehiculoController,
+              _buildTipoVehiculoDropdown(
                 label: 'Tipo de Vehículo',
+                value: _selectedTipoVehiculo,
+                items: _tiposVehiculos,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedTipoVehiculo = value;
+                  });
+                },
               ),
               _buildDropdownField(
                 label: 'ID de Espacio',
@@ -105,9 +133,10 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                     final nuevoIngreso = IngresoVehiculos(
                       placaVehiculo: _placaVehiculoController.text,
                       fechaIngreso: _fechaIngresoController.text,
-                      tipoVehiculo: _tipoVehiculoController.text,
+                      tipoVehiculo: _selectedTipoVehiculo!
+                          .nombre, // Usa el nombre del tipo de vehículo seleccionado
                       idEspacio: int.parse(_idEspacioController.text),
-                      fechaSalida: null, // Explicitamente null
+                      fechaSalida: null,
                     );
 
                     try {
@@ -115,20 +144,20 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                           .createIngresoVehiculo(nuevoIngreso);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text(
-                                'Ingreso de vehículo agregado exitosamente')),
+                          content:
+                              Text('Ingreso de vehículo agregado exitosamente'),
+                        ),
                       );
-                      // Redirigir a la lista de vehículos o a la página de inicio
-                      context.go(
-                          '/home'); // Reemplaza '/ingresovehiculo' con la ruta correcta
+                      context.go('/home');
                     } catch (e) {
                       if (kDebugMode) {
                         print('Error al agregar ingreso de vehículo: $e');
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text(
-                                'Error al agregar ingreso de vehículo: $e')),
+                          content:
+                              Text('Error al agregar ingreso de vehículo: $e'),
+                        ),
                       );
                     }
                   }
@@ -139,6 +168,39 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTipoVehiculoDropdown({
+    required String label,
+    required TipoVehiculo? value,
+    required List<TipoVehiculo> items,
+    required ValueChanged<TipoVehiculo?> onChanged,
+  }) {
+    return DropdownButtonFormField<TipoVehiculo>(
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontSize: 18,
+            ),
+      ),
+      value: value,
+      items: items
+          .map((item) => DropdownMenuItem<TipoVehiculo>(
+                value: item,
+                child: Text(
+                  item.nombre, // Usa el nombre del tipo de vehículo como texto del elemento desplegable
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ))
+          .toList(),
+      onChanged: onChanged,
+      validator: (value) {
+        if (value == null) {
+          return 'Por favor seleccione un $label';
+        }
+        return null;
+      },
     );
   }
 
