@@ -4,7 +4,7 @@ import 'package:memes/models/establecimiento.dart';
 import 'package:memes/services/api_services_establecimiento.dart';
 
 class EstablecimientoListView extends StatefulWidget {
-  const EstablecimientoListView({super.key});
+  const EstablecimientoListView({Key? key}) : super(key: key);
 
   @override
   State<EstablecimientoListView> createState() =>
@@ -23,7 +23,15 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Info establecimiento')),
+      appBar: AppBar(
+        title: Text(
+          '    Info establecimiento',
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: const Color.fromARGB(255, 73, 128, 237),
+              ),
+        ),
+      ),
       body: FutureBuilder<List<Establecimiento>>(
         future: futureEstablecimientos,
         builder: (context, snapshot) {
@@ -33,7 +41,8 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(
-                child: Text('No se encontraron establecimientos'));
+              child: Text('No se encontraron establecimientos'),
+            );
           } else {
             final establecimientos = snapshot.data!;
             if (establecimientos.length == 1) {
@@ -46,36 +55,33 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
                     _buildInfoRow(
                       'Nombre:',
                       establecimiento.nombreEstablecimiento,
-                      fontSizeLabel: 22,
-                      fontWeightLabel: FontWeight.bold,
-                      fontSizeValue: 20,
-                      fontWeightValue: FontWeight.normal,
+                      fontWeightLabel: FontWeight.w900,
+                      fontWeightValue: FontWeight.w600,
                     ),
                     _buildInfoRow(
                       'Dirección:',
                       establecimiento.direccion,
-                      fontSizeLabel: 22,
-                      fontWeightLabel: FontWeight.bold,
-                      fontSizeValue: 20,
-                      fontWeightValue: FontWeight.normal,
+                      fontWeightLabel: FontWeight.w900,
+                      fontWeightValue: FontWeight.w600,
                     ),
                     _buildInfoRow(
                       'NIT:',
                       establecimiento.nit,
-                      fontSizeLabel: 22,
-                      fontWeightLabel: FontWeight.bold,
-                      fontSizeValue: 20,
-                      fontWeightValue: FontWeight.normal,
+                      fontWeightLabel: FontWeight.w900,
+                      fontWeightValue: FontWeight.w600,
                     ),
                     const SizedBox(height: 20),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
                         'Descripción',
-                        style: GoogleFonts.montserratAlternates(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 73, 128, 237),
+                            ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -84,10 +90,10 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
                       child: Text(
                         establecimiento.descripcion,
                         textAlign: TextAlign.start,
-                        style: GoogleFonts.montserratAlternates(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
                       ),
                     ),
                   ],
@@ -105,13 +111,7 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
                         style: GoogleFonts.montserratAlternates(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Descripcion${establecimiento.descripcion}',
-                        style: GoogleFonts.montserratAlternates(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -128,10 +128,8 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
   Widget _buildInfoRow(
     String label,
     String value, {
-    double fontSizeLabel = 20,
-    FontWeight fontWeightLabel = FontWeight.normal,
-    double fontSizeValue = 18,
-    FontWeight fontWeightValue = FontWeight.normal,
+    FontWeight fontWeightLabel = FontWeight.bold,
+    FontWeight fontWeightValue = FontWeight.bold,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -139,23 +137,23 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 150,
+            width: 110,
             child: Text(
               label,
-              style: GoogleFonts.montserratAlternates(
-                fontWeight: fontWeightLabel,
-                fontSize: fontSizeLabel,
-              ),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 73, 128, 237),
+                  ),
             ),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               value,
-              style: GoogleFonts.montserratAlternates(
-                fontWeight: fontWeightValue,
-                fontSize: fontSizeValue,
-              ),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: fontWeightValue,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                  ),
             ),
           ),
         ],
