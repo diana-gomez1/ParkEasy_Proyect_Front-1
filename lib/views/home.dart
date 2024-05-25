@@ -6,6 +6,7 @@ import 'package:memes/views/caja/caja_list_view.dart';
 import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_list_view.dart';
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
+import 'package:memes/views/ingresovehiculos/ingresovehiculos_list_view.dart';
 import 'package:memes/views/tipovehiculo/tipovehiculo_list_view.dart';
 import 'package:memes/services/api_services_caja.dart';
 
@@ -142,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: <Widget>[
-        const EspacioEstacionamientoListView(),
+        const IngresoVehiculoListView(),
         const EspacioEstacionamientoListView(),
         const FacturaListView(),
         const TipoVehiculoListView(),

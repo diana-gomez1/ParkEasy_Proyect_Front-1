@@ -5,6 +5,7 @@ import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/models/factura.dart';
 import 'package:memes/models/caja.dart'; // Importar el modelo de Caja
 import 'package:memes/services/api_services_espacioestacionamiento.dart';
+//import 'package:memes/services/api_services_ingresovehiculos.dart';
 import 'package:memes/views/caja/caja_list_view.dart';
 import 'package:memes/views/caja/caja_form_page.dart'; // Importar la vista del formulario de Caja
 import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_form_page.dart';
@@ -13,6 +14,8 @@ import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_list_v
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_form_page.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
+//import 'package:memes/views/ingresovehiculos/ingresovehiculos_form_page.dart';
+import 'package:memes/views/ingresovehiculos/ingresovehiculos_list_view.dart';
 import 'package:memes/views/import_views.dart';
 
 // GoRouter configuration
@@ -166,6 +169,33 @@ final appRouter = GoRouter(
         return Container();
       },
     ),
+    GoRoute(
+      path: '/ingresovehiculosver',
+      builder: (context, state) => const IngresoVehiculoListView(),
+    ),
+    // GoRoute(
+    //   path: '/ingresovehiculoagregar',
+    //   builder: (context, state) => const IngresoVehiculosFormPage(),
+    // ),
+    // GoRoute(
+    //   path: '/ingresovehiculoeditar/:placaVehiculo',
+    //   builder: (context, state) {
+    //     final placaVehiculo = state.pathParameters['placaVehiculo'];
+    //     return IngresoVehiculosFormPage(placaVehiculo: placaVehiculo!);
+    //   },
+    // ),
+    // GoRoute(
+    //   path: '/ingresovehiculoeliminar/:placaVehiculo',
+    //   builder: (context, state) {
+    //     final placaVehiculo = state.pathParameters['placaVehiculo'];
+    //     // Llamar al método para eliminar el ingreso de vehículo con la placa proporcionada
+    //     ApiServiceIngresoVehiculos().deleteIngresoVehiculo(placaVehiculo!);
+    //     // Redirigir de vuelta a la lista de ingresos de vehículos
+    //     context.go('/ingresovehiculosver');
+    //     // Retornar un widget vacío ya que esta página no tiene contenido visible
+    //     return Container();
+    //   },
+    // ),
   ],
   errorBuilder: (context, state) => Scaffold(
     body: Center(child: Text('Ruta no encontrada: ${state.error}')),
