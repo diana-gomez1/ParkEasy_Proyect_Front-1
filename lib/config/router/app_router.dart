@@ -86,13 +86,6 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/tipovehiculo/:id_vehiculo',
-      builder: (context, state) {
-        final id = int.parse(state.pathParameters['id_vehiculo']!);
-        return TipoVehiculoDetailPage(id: id);
-      },
-    ),
-    GoRoute(
       path: '/tipovehiculosagregar',
       builder: (context, state) => const TipoVehiculoFormPage(),
     ),

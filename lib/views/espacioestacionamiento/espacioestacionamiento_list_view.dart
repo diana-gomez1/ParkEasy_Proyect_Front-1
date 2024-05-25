@@ -29,7 +29,29 @@ class _EspacioEstacionamientoListViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Espacios de Estacionamiento')),
+      appBar: AppBar(
+        title: Text(
+          'Espacios Parking Lot',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 24, 99, 250)),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: IconButton(
+              // ignore: prefer_const_constructors
+              icon: Icon(
+                Icons.add_box_sharp,
+                color: const Color.fromARGB(255, 24, 99, 250),
+              ),
+              onPressed: () {
+                context.go('/espacioestacionamientoagregar');
+              },
+            ),
+          ),
+        ],
+      ),
       body: FutureBuilder<List<EspacioEstacionamiento>>(
         future: futureEspaciosEstacionamiento,
         builder: (context, snapshot) {
@@ -42,22 +64,24 @@ class _EspacioEstacionamientoListViewState
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Fila de cuadros super pequeños para mostrar el estado
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children:
-                        espaciosEstacionamiento.map((espacioEstacionamiento) {
-                      final bool ocupado = espacioEstacionamiento.ocupado;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: _buildStatusBox(espacioEstacionamiento, ocupado),
-                      );
-                    }).toList(),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children:
+                          espaciosEstacionamiento.map((espacioEstacionamiento) {
+                        final bool ocupado = espacioEstacionamiento.ocupado;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child:
+                              _buildStatusBox(espacioEstacionamiento, ocupado),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
-                // Lista de tarjetas de espacio de estacionamiento
                 Expanded(
                   child: ListView.builder(
                     itemCount: espaciosEstacionamiento.length,
@@ -77,12 +101,7 @@ class _EspacioEstacionamientoListViewState
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go('/espacioestacionamientoagregar');
-        },
-        child: const Icon(Icons.add_box_sharp),
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 
@@ -100,7 +119,10 @@ class _EspacioEstacionamientoListViewState
         ),
         Text(
           espacioEstacionamiento.nombreEspacio,
-          style: const TextStyle(fontSize: 12),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w900,
+                fontSize: 12,
+              ),
         ),
       ],
     );

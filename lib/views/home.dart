@@ -110,19 +110,24 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            selectedIcon: Icon(Icons.car_crash_outlined),
+            icon: Icon(Icons.car_crash),
+            label: 'Ingreso',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
-            label: 'TipoVehiculo',
+            label: 'Espacios',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.receipt_long),
             icon: Icon(Icons.receipt_long_rounded),
             label: 'Factura',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Vehiculos',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.attach_money),
@@ -138,8 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: <Widget>[
         const EspacioEstacionamientoListView(),
-        const TipoVehiculoListView(),
+        const EspacioEstacionamientoListView(),
         const FacturaListView(),
+        const TipoVehiculoListView(),
         const CajaListView(),
         const EstablecimientoListView(),
       ][currentPageIndex],
