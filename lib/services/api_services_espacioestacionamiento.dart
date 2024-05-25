@@ -10,7 +10,8 @@ class ApiServiceEspacioEstacionamiento {
   //static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
 
   Future<List<EspacioEstacionamiento>> getEspaciosEstacionamiento() async {
-    final response = await http.get(Uri.parse('$baseUrl/espaciosestacionamientover'));
+    final response =
+        await http.get(Uri.parse('$baseUrl/espacioestacionamientover'));
     if (response.statusCode == 200) {
       if (kDebugMode) {
         print('Response body: ${response.body}');
@@ -29,8 +30,10 @@ class ApiServiceEspacioEstacionamiento {
     }
   }
 
-  Future<EspacioEstacionamiento> getEspacioEstacionamiento(int idEspacio) async {
-    final response = await http.get(Uri.parse('$baseUrl/espaciosestacionamiento/$idEspacio'));
+  Future<EspacioEstacionamiento> getEspacioEstacionamiento(
+      int idEspacio) async {
+    final response = await http
+        .get(Uri.parse('$baseUrl/espacioestacionamientobuscar/$idEspacio'));
     if (response.statusCode == 200) {
       return EspacioEstacionamiento.fromJson(json.decode(response.body));
     } else {
@@ -38,9 +41,10 @@ class ApiServiceEspacioEstacionamiento {
     }
   }
 
-  Future<void> createEspacioEstacionamiento(EspacioEstacionamiento espacio) async {
+  Future<void> createEspacioEstacionamiento(
+      EspacioEstacionamiento espacio) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/espaciosestacionamientoagregar'),
+      Uri.parse('$baseUrl/espacioestacionamientoagregar'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(espacio.toJson()),
     );
@@ -49,9 +53,10 @@ class ApiServiceEspacioEstacionamiento {
     }
   }
 
-  Future<void> updateEspacioEstacionamiento(EspacioEstacionamiento espacio) async {
+  Future<void> updateEspacioEstacionamiento(
+      EspacioEstacionamiento espacio) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/espaciosestacionamientoact'),
+      Uri.parse('$baseUrl/espacioestacionamientoact'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(espacio.toJson()),
     );
@@ -62,7 +67,7 @@ class ApiServiceEspacioEstacionamiento {
 
   Future<void> deleteEspacioEstacionamiento(int idEspacio) async {
     final response = await http.delete(
-      Uri.parse('$baseUrl/espaciosestacionamientodestroy/$idEspacio'),
+      Uri.parse('$baseUrl/espacioestacionamientodestroy/$idEspacio'),
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to delete espacio_estacionamiento');

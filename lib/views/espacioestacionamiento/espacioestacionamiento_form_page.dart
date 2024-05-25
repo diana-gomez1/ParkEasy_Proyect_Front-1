@@ -10,13 +10,16 @@ import 'package:memes/services/api_services_espacioestacionamiento.dart';
 class EspacioEstacionamientoFormPage extends StatefulWidget {
   final EspacioEstacionamiento? espacioEstacionamiento;
 
-  const EspacioEstacionamientoFormPage({super.key, this.espacioEstacionamiento});
+  const EspacioEstacionamientoFormPage(
+      {super.key, this.espacioEstacionamiento});
 
   @override
-  State<EspacioEstacionamientoFormPage> createState() => _EspacioEstacionamientoFormPageState();
+  State<EspacioEstacionamientoFormPage> createState() =>
+      _EspacioEstacionamientoFormPageState();
 }
 
-class _EspacioEstacionamientoFormPageState extends State<EspacioEstacionamientoFormPage> {
+class _EspacioEstacionamientoFormPageState
+    extends State<EspacioEstacionamientoFormPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _idController;
   late TextEditingController _nombreController;
@@ -28,8 +31,8 @@ class _EspacioEstacionamientoFormPageState extends State<EspacioEstacionamientoF
     super.initState();
     _idController = TextEditingController(
         text: widget.espacioEstacionamiento?.idEspacio.toString() ?? '');
-    _nombreController =
-        TextEditingController(text: widget.espacioEstacionamiento?.nombreEspacio ?? '');
+    _nombreController = TextEditingController(
+        text: widget.espacioEstacionamiento?.nombreEspacio ?? '');
     _tipoVehiculoController = TextEditingController(
         text: widget.espacioEstacionamiento?.tipoVehiculo ?? '');
     _ocupadoController = TextEditingController(
@@ -131,8 +134,22 @@ class _EspacioEstacionamientoFormPageState extends State<EspacioEstacionamientoF
                     ),
                   ),
                   items: const [
-                    DropdownMenuItem(value: true, child: Text('Sí')),
-                    DropdownMenuItem(value: false, child: Text('No')),
+                    DropdownMenuItem(
+                      value: true,
+                      child: Text(
+                        'Sí',
+                        style: TextStyle(
+                            fontSize: 16), // Cambiar el tamaño del texto a 16
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: false,
+                      child: Text(
+                        'No',
+                        style: TextStyle(
+                            fontSize: 16), // Cambiar el tamaño del texto a 16
+                      ),
+                    ),
                   ],
                   onChanged: (value) {
                     _ocupadoController.text = value.toString();
@@ -152,14 +169,17 @@ class _EspacioEstacionamientoFormPageState extends State<EspacioEstacionamientoF
                         idEspacio: int.parse(_idController.text),
                         nombreEspacio: _nombreController.text,
                         tipoVehiculo: _tipoVehiculoController.text,
-                        ocupado: _ocupadoController.text.toLowerCase() == 'true',
+                        ocupado:
+                            _ocupadoController.text.toLowerCase() == 'true',
                       );
                       if (widget.espacioEstacionamiento == null) {
                         await ApiServiceEspacioEstacionamiento()
-                            .createEspacioEstacionamiento(espacioEstacionamiento);
+                            .createEspacioEstacionamiento(
+                                espacioEstacionamiento);
                       } else {
                         await ApiServiceEspacioEstacionamiento()
-                            .updateEspacioEstacionamiento(espacioEstacionamiento);
+                            .updateEspacioEstacionamiento(
+                                espacioEstacionamiento);
                       }
                       context.go('/home');
                     }
@@ -170,8 +190,9 @@ class _EspacioEstacionamientoFormPageState extends State<EspacioEstacionamientoF
                     textStyle: GoogleFonts.montserratAlternates(
                         fontSize: 18, fontWeight: FontWeight.w700),
                   ),
-                  child: Text(
-                      widget.espacioEstacionamiento == null ? 'Crear' : 'Actualizar'),
+                  child: Text(widget.espacioEstacionamiento == null
+                      ? 'Crear'
+                      : 'Actualizar'),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(

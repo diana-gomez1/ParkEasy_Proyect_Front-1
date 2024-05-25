@@ -4,8 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/models/factura.dart';
 import 'package:memes/models/caja.dart'; // Importar el modelo de Caja
+import 'package:memes/services/api_services_espacioestacionamiento.dart';
 import 'package:memes/views/caja/caja_list_view.dart';
 import 'package:memes/views/caja/caja_form_page.dart'; // Importar la vista del formulario de Caja
+import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_form_page.dart';
+import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_list_view.dart';
 // import 'package:memes/services/api-services_establecimiento.dart';
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_form_page.dart';
@@ -147,6 +150,27 @@ final appRouter = GoRouter(
         });
         // Devolver un contenedor vacío
         return const SizedBox.shrink();
+      },
+    ),
+    GoRoute(
+      path: '/espacioestacionamientover',
+      builder: (context, state) => const EspacioEstacionamientoListView(),
+    ),
+    GoRoute(
+      path: '/espacioestacionamientoagregar',
+      builder: (context, state) => const EspacioEstacionamientoFormPage(),
+    ),
+    GoRoute(
+      path: '/espacioestacionamientoeliminar/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id'];
+        // Llamar al método para eliminar el espacio de estacionamiento con el ID proporcionado
+        ApiServiceEspacioEstacionamiento()
+            .deleteEspacioEstacionamiento(int.parse(id!));
+        // Redirigir de vuelta a la lista de espacios de estacionamiento
+        context.go('/espacioestacionamientover');
+        // Retornar un widget vacío ya que esta página no tiene contenido visible
+        return Container();
       },
     ),
   ],

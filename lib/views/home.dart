@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:memes/views/caja/caja_list_view.dart';
+import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_list_view.dart';
 import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
 import 'package:memes/views/factura/factura_list_view.dart';
 import 'package:memes/views/tipovehiculo/tipovehiculo_list_view.dart';
@@ -114,6 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Home',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'TipoVehiculo',
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Icons.receipt_long),
             icon: Icon(Icons.receipt_long_rounded),
             label: 'Factura',
@@ -131,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: <Widget>[
+        const EspacioEstacionamientoListView(),
         const TipoVehiculoListView(),
         const FacturaListView(),
         const CajaListView(),

@@ -1,28 +1,31 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memes/models/espacioestacionamiento.dart';
-import 'package:memes/config/theme/app_theme.dart';
 import 'package:memes/services/api_services_espacioestacionamiento.dart';
 
 class EspacioEstacionamientoListView extends StatefulWidget {
   const EspacioEstacionamientoListView({super.key});
 
   @override
-  State<EspacioEstacionamientoListView> createState() => _EspacioEstacionamientoListViewState();
+  _EspacioEstacionamientoListViewState createState() =>
+      _EspacioEstacionamientoListViewState();
 }
 
-class _EspacioEstacionamientoListViewState extends State<EspacioEstacionamientoListView> {
+class _EspacioEstacionamientoListViewState
+    extends State<EspacioEstacionamientoListView> {
   late Future<List<EspacioEstacionamiento>> futureEspaciosEstacionamiento;
 
   @override
   void initState() {
     super.initState();
-    futureEspaciosEstacionamiento = ApiServiceEspacioEstacionamiento().getEspaciosEstacionamiento();
+    futureEspaciosEstacionamiento =
+        ApiServiceEspacioEstacionamiento().getEspaciosEstacionamiento();
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,98 +39,40 @@ class _EspacioEstacionamientoListViewState extends State<EspacioEstacionamientoL
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final espaciosEstacionamiento = snapshot.data!;
-            return ListView.builder(
-              itemCount: espaciosEstacionamiento.length,
-              itemBuilder: (context, index) {
-                final espacioEstacionamiento = espaciosEstacionamiento[index];
-                return ExpansionTile(
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${espacioEstacionamiento.idEspacio}: ${espacioEstacionamiento.nombreEspacio}',
-                              style: AppTheme().getTheme().textTheme.titleMedium,
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Confirmación'),
-                              content: const Text(
-                                '¿Estás seguro de que deseas eliminar este espacio de estacionamiento?',
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Cancelar'),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    try {
-                                      await ApiServiceEspacioEstacionamiento()
-                                          .deleteEspacioEstacionamiento(
-                                        espacioEstacionamiento.idEspacio,
-                                      );
-                                      setState(() {
-                                        futureEspaciosEstacionamiento =
-                                            ApiServiceEspacioEstacionamiento()
-                                                .getEspaciosEstacionamiento();
-                                      });
-                                      Navigator.of(context).pop();
-                                      context.go('/home');
-                                    } catch (e) {
-                                      if (kDebugMode) {
-                                        print('Error al eliminar: $e');
-                                      }
-                                    }
-                                  },
-                                  child: const Text('Eliminar'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.delete_forever),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.go(
-                            '/edit/${espacioEstacionamiento.idEspacio}?nombre=${Uri.encodeComponent(espacioEstacionamiento.nombreEspacio)}',
-                          );
-                        },
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Fila de cuadros super pequeños para mostrar el estado
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children:
+                        espaciosEstacionamiento.map((espacioEstacionamiento) {
+                      final bool ocupado = espacioEstacionamiento.ocupado;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: _buildStatusBox(espacioEstacionamiento, ocupado),
+                      );
+                    }).toList(),
                   ),
-                  subtitle: Text(
-                    'Tipo de Vehículo: ${espacioEstacionamiento.tipoVehiculo}',
-                    style: AppTheme().getTheme().textTheme.titleSmall,
+                ),
+                const SizedBox(height: 8),
+                // Lista de tarjetas de espacio de estacionamiento
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: espaciosEstacionamiento.length,
+                    itemBuilder: (context, index) {
+                      final espacioEstacionamiento =
+                          espaciosEstacionamiento[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _buildEspacioEstacionamientoCard(
+                            espacioEstacionamiento),
+                      );
+                    },
                   ),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Ocupado: ${espacioEstacionamiento.ocupado ? "Sí" : "No"}',
-                            style: AppTheme().getTheme().textTheme.titleSmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
+                ),
+              ],
             );
           }
         },
@@ -139,5 +84,118 @@ class _EspacioEstacionamientoListViewState extends State<EspacioEstacionamientoL
         child: const Icon(Icons.add_box_sharp),
       ),
     );
+  }
+
+  Widget _buildStatusBox(
+      EspacioEstacionamiento espacioEstacionamiento, bool ocupado) {
+    return Column(
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          color: ocupado
+              ? const Color.fromARGB(234, 224, 84, 76)
+              : const Color.fromARGB(255, 110, 226, 126),
+          margin: const EdgeInsets.only(bottom: 4),
+        ),
+        Text(
+          espacioEstacionamiento.nombreEspacio,
+          style: const TextStyle(fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEspacioEstacionamientoCard(
+    EspacioEstacionamiento espacioEstacionamiento,
+  ) {
+    final bool ocupado = espacioEstacionamiento.ocupado;
+    final Color color = ocupado
+        ? const Color.fromARGB(234, 224, 84, 76)
+        : const Color.fromARGB(255, 110, 226, 126);
+
+    return Card(
+      color: color,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
+        title: Text(
+          'Nombre del lugar --> ${espacioEstacionamiento.nombreEspacio}',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 18, // Tamaño de fuente ajustado
+              ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '¿Estado? --> ${ocupado ? "Ocupado" : "Libre"}',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 18, // Tamaño de fuente ajustado
+                  ),
+            ),
+            Text(
+              'Tipo de vehículo --> ${espacioEstacionamiento.tipoVehiculo}',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 18, // Tamaño de fuente ajustado
+                  ),
+            ),
+          ],
+        ),
+        trailing: IconButton(
+          onPressed: () {
+            _showDeleteConfirmationDialog(espacioEstacionamiento);
+          },
+          icon: const Icon(Icons.delete),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showDeleteConfirmationDialog(
+      EspacioEstacionamiento espacioEstacionamiento) async {
+    final confirmed = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirmación'),
+        content: const Text(
+            '¿Estás seguro de que deseas eliminar este espacio de estacionamiento?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () async {
+              try {
+                await ApiServiceEspacioEstacionamiento()
+                    .deleteEspacioEstacionamiento(
+                        espacioEstacionamiento.idEspacio);
+                setState(() {
+                  futureEspaciosEstacionamiento =
+                      ApiServiceEspacioEstacionamiento()
+                          .getEspaciosEstacionamiento();
+                });
+                Navigator.of(context).pop(true);
+                context.go('/home');
+              } catch (e) {
+                if (kDebugMode) {
+                  print('Error al eliminar: $e');
+                }
+                Navigator.of(context).pop(false);
+              }
+            },
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Espacio de estacionamiento eliminado')),
+      );
+    }
   }
 }
