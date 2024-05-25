@@ -1,17 +1,16 @@
-// Clase de modelo IngresoVehiculos
 class IngresoVehiculos {
   final String placaVehiculo;
   final String fechaIngreso;
   final String tipoVehiculo;
   final int idEspacio;
-  final String fechaSalida;
+  final String? fechaSalida; // Permitir que sea null
 
   IngresoVehiculos({
     required this.placaVehiculo,
     required this.fechaIngreso,
     required this.tipoVehiculo,
     required this.idEspacio,
-    required this.fechaSalida,
+    this.fechaSalida, // Permitir que sea null
   });
 
   factory IngresoVehiculos.fromJson(Map<String, dynamic> json) {
@@ -20,7 +19,7 @@ class IngresoVehiculos {
       fechaIngreso: json['fecha_ingreso'] ?? '',
       tipoVehiculo: json['tipo_vehiculo'] ?? '',
       idEspacio: json['id_espacio'] ?? 0,
-      fechaSalida: json['fecha_salida'] ?? '',
+      fechaSalida: json['fecha_salida'],
     );
   }
 
