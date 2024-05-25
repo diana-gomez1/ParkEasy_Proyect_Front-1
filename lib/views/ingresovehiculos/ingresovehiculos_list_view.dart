@@ -32,7 +32,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
           'Ingreso de Vehículos',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 24, 99, 250),
+                color: const Color.fromARGB(255, 73, 128, 237),
               ),
         ),
         actions: [
@@ -41,7 +41,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
             child: IconButton(
               icon: const Icon(
                 Icons.add_circle_outline_sharp,
-                color: Color.fromARGB(255, 24, 99, 250),
+                color: Color.fromARGB(255, 73, 128, 237),
               ),
               onPressed: () {
                 context.go('/ingresovehiculoagregar');
@@ -80,7 +80,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
     final placaValue = ingresoVehiculo.placaVehiculo;
 
     // Formatea la fecha de ingreso
-    final fechaIngreso = DateFormat('HH:mm dd/MM')
+    final fechaIngreso = DateFormat('HH:mm - dd/MM')
         .format(DateTime.parse(ingresoVehiculo.fechaIngreso));
 
     return Card(
@@ -93,15 +93,14 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
                 text: placaText,
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: 21,
-                      color: const Color.fromARGB(255, 24, 99, 250),
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
               ),
               TextSpan(
                 text: placaValue,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontSize: 18,
-                      color: const Color.fromARGB(255, 0, 0,
-                          0), // Cambia el color del número de placa aquí
+                      color: const Color.fromARGB(255, 73, 128, 237),
                     ),
               ),
             ],
@@ -115,15 +114,14 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
                 text: 'Fecha de Ingreso: ',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: 21,
-                      color: const Color.fromARGB(255, 24, 99, 250),
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                 children: [
                   TextSpan(
                     text: fechaIngreso, // Utiliza la fecha formateada aquí
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize: 18,
-                          color: const Color.fromARGB(255, 0, 0,
-                              0), // Cambia el color de la fecha de ingreso aquí
+                          color: const Color.fromARGB(255, 73, 128, 237),
                         ),
                   ),
                 ],
@@ -134,15 +132,16 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
                 text: 'Tipo de Vehículo: ',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: 21,
-                      color: const Color.fromARGB(255, 24, 99, 250),
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                 children: [
                   TextSpan(
                     text: ingresoVehiculo.tipoVehiculo,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize: 18,
-                          color: const Color.fromARGB(255, 0, 0,
-                              0), // Cambia el color del tipo de vehículo aquí
+                          color: const Color.fromARGB(255, 73, 128, 237),
+                          // azul 255, 73, 128, 237
+                          // negro 255, 0, 0, 0
                         ),
                   ),
                 ],
@@ -155,7 +154,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
               _showDeleteConfirmationDialog(ingresoVehiculo);
             },
             icon: const Icon(Icons.delete_forever_outlined),
-            color: const Color.fromARGB(255, 24, 99, 250)),
+            color: const Color.fromARGB(255, 73, 128, 237)),
       ),
     );
   }
