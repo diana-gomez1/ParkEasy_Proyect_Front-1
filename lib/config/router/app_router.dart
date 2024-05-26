@@ -179,13 +179,6 @@ final appRouter = GoRouter(
       path: '/ingresovehiculoagregar',
       builder: (context, state) => const IngresoVehiculoFormPage(),
     ),
-    // GoRoute(
-    //   path: '/ingresovehiculoeditar/:placaVehiculo',
-    //   builder: (context, state) {
-    //     final placaVehiculo = state.pathParameters['placaVehiculo'];
-    //     return IngresoVehiculosFormPage(placaVehiculo: placaVehiculo!);
-    //   },
-    // ),
     GoRoute(
       path: '/ingresovehiculoeliminar/:placaVehiculo',
       builder: (context, state) {

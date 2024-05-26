@@ -166,12 +166,6 @@ class _FacturaListViewState extends State<FacturaListView> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go('/facturaagregar');
-        },
-        child: const Icon(Icons.add_box_sharp),
-      ),
     );
   }
 
