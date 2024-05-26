@@ -21,7 +21,6 @@ class _FacturaFormPageState extends State<FacturaFormPage> {
   late TextEditingController _idController;
   late TextEditingController _placaVehiculoController;
   late TextEditingController _montoPagarController;
-  late TextEditingController _fechaSalidaController;
 
   @override
   void initState() {
@@ -32,10 +31,6 @@ class _FacturaFormPageState extends State<FacturaFormPage> {
         TextEditingController(text: widget.factura?.placaVehiculo ?? '');
     _montoPagarController = TextEditingController(
         text: widget.factura?.montoPagar.toString() ?? '');
-    _fechaSalidaController = TextEditingController(
-        text: widget.factura?.fechaSalida != null
-            ? widget.factura!.fechaSalida.toString()
-            : '');
   }
 
   @override
@@ -125,16 +120,12 @@ class _FacturaFormPageState extends State<FacturaFormPage> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      DateTime? fechaSalida;
-                      if (_fechaSalidaController.text.isNotEmpty) {
-                        fechaSalida =
-                            DateTime.parse(_fechaSalidaController.text);
-                      }
                       final factura = Factura(
                         idFactura: int.parse(_idController.text),
                         placaVehiculo: _placaVehiculoController.text,
                         montoPagar: double.parse(_montoPagarController.text),
-                        fechaSalida: fechaSalida,
+                        fechaSalida:
+                            DateTime.now(), // Asigna la fecha y hora actual
                       );
                       if (widget.factura == null) {
                         await ApiServiceFactura().createFactura(factura);

@@ -2,13 +2,13 @@ class Factura {
   final int idFactura;
   final String placaVehiculo;
   final double montoPagar;
-  final DateTime? fechaSalida; // Cambio: hacer fechaSalida opcional
+  final DateTime? fechaSalida; // fechaSalida opcional
 
   Factura({
     required this.idFactura,
     required this.placaVehiculo,
     required this.montoPagar,
-    this.fechaSalida, // Cambio: fechaSalida puede ser null
+    this.fechaSalida, // fechaSalida puede ser null
   });
 
   factory Factura.fromJson(Map<String, dynamic> json) {
@@ -18,7 +18,7 @@ class Factura {
       montoPagar: double.parse(json['monto_pagar'].toString()),
       fechaSalida: json['fecha_salida'] != null
           ? DateTime.parse(json['fecha_salida'])
-          : null, // Cambio: manejar fechaSalida opcional
+          : null, // manejar fechaSalida opcional
     );
   }
 
@@ -27,8 +27,8 @@ class Factura {
       'id_factura': idFactura,
       'placa_vehiculo': placaVehiculo,
       'monto_pagar': montoPagar.toString(),
-      'fecha_salida': fechaSalida
-          ?.toIso8601String(), // Cambio: manejar fechaSalida opcional
+      'fecha_salida':
+          fechaSalida?.toIso8601String(), // manejar fechaSalida opcional
     };
   }
 }
