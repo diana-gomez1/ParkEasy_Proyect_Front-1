@@ -30,7 +30,7 @@ final appRouter = GoRouter(
     // ),
     GoRoute(
       path: '/',
-      builder: (context, state) => const LoginPage(),
+      builder: (context, state) => const MyHomePage(),
     ),
     GoRoute(
       path: '/register',

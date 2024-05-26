@@ -86,7 +86,7 @@ class _CajaListViewState extends State<CajaListView> {
                         _buildInfoRow(
                           'Saldo:',
                           '\$${caja.saldo}',
-                          'Nombre administrador:',
+                          '               Administrador:',
                           caja.nombreAdmin,
                         ),
                         Row(
