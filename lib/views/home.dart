@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Text(
-                        'Saldo \$${snapshot.data!.toStringAsFixed(0)}',
+                        'Saldo: \$${snapshot.data!.toStringAsFixed(0)}',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     } else {
                       return Text(
-                        'Saldo \$0',
+                        'Saldo: \$0',
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -125,33 +125,47 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.car_crash_outlined),
-            icon: Icon(Icons.car_crash),
+            selectedIcon: Icon(Icons.car_crash,
+                color: Color.fromARGB(255, 254, 254, 254)),
+            icon: Icon(Icons.car_crash_outlined,
+                color: Color.fromARGB(255, 73, 128, 237)),
             label: 'Ingreso',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            selectedIcon:
+                Icon(Icons.home, color: Color.fromARGB(255, 254, 254, 254)),
+            icon: Icon(Icons.home_outlined,
+                color: Color.fromARGB(255, 73, 128, 237)),
             label: 'Espacios',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.receipt_long),
-            icon: Icon(Icons.receipt_long_rounded),
+            selectedIcon: Icon(Icons.receipt_long,
+                color: Color.fromARGB(255, 254, 254, 254)),
+            icon: Icon(Icons.receipt_long_rounded,
+                color: Color.fromARGB(255, 73, 128, 237)),
             label: 'Factura',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.car_repair,
+                color: Color.fromARGB(255, 254, 254, 254)),
+            icon: Icon(Icons.car_repair_outlined,
+                color: Color.fromARGB(255, 73, 128, 237)),
             label: 'Vehiculos',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.attach_money),
-            icon: Icon(Icons.attach_money_outlined),
+            selectedIcon: Icon(Icons.attach_money,
+                color: Color.fromARGB(255, 254, 254, 254)),
+            icon: Icon(Icons.attach_money_outlined,
+                color: Color.fromARGB(255, 73, 128, 237)),
             label: 'Caja',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.local_parking),
-            icon: Icon(Icons.local_parking_rounded),
+            selectedIcon: Icon(Icons.local_parking,
+                color: Color.fromARGB(255, 254, 254, 254)),
+            icon: Icon(
+              Icons.local_parking_rounded,
+              color: Color.fromARGB(255, 73, 128, 237),
+            ),
             label: 'Info',
           ),
         ],
