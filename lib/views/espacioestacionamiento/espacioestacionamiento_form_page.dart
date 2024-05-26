@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/models/espacioestacionamiento.dart';
-import 'package:memes/config/theme/app_theme.dart';
 import 'package:memes/services/api_services_espacioestacionamiento.dart';
 
 class EspacioEstacionamientoFormPage extends StatefulWidget {
@@ -41,174 +40,187 @@ class _EspacioEstacionamientoFormPageState
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: AppTheme().getTheme(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.espacioEstacionamiento == null
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.espacioEstacionamiento == null
               ? 'Crear Espacio de Estacionamiento'
-              : 'Editar Espacio de Estacionamiento'),
+              : 'Editar Espacio de Estacionamiento',
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _idController,
-                  decoration: InputDecoration(
-                    labelText: 'ID del Espacio',
-                    border: const OutlineInputBorder(),
-                    labelStyle: GoogleFonts.montserratAlternates(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: GoogleFonts.montserratAlternates(
+        backgroundColor: const Color(0xFF497FEB),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          color: const Color.fromARGB(255, 56, 244, 18),
+          onPressed: () {
+            context.go('/home');
+          },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _idController,
+                decoration: InputDecoration(
+                  labelText: 'ID del Espacio',
+                  border: const OutlineInputBorder(),
+                  labelStyle: GoogleFonts.montserratAlternates(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
                   ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese la ID del espacio';
-                    }
-                    return null;
-                  },
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _nombreController,
-                  decoration: InputDecoration(
-                    labelText: 'Nombre del Espacio',
-                    border: const OutlineInputBorder(),
-                    labelStyle: GoogleFonts.montserratAlternates(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: GoogleFonts.montserratAlternates(
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: const Color.fromARGB(255, 73, 128, 237),
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingrese la ID del espacio';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _nombreController,
+                decoration: InputDecoration(
+                  labelText: 'Nombre del Espacio',
+                  border: const OutlineInputBorder(),
+                  labelStyle: GoogleFonts.montserratAlternates(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un nombre';
-                    }
-                    return null;
-                  },
                 ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _tipoVehiculoController,
-                  decoration: InputDecoration(
-                    labelText: 'Tipo de Vehículo',
-                    border: const OutlineInputBorder(),
-                    labelStyle: GoogleFonts.montserratAlternates(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: GoogleFonts.montserratAlternates(
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: const Color.fromARGB(255, 73, 128, 237),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingrese un nombre';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _tipoVehiculoController,
+                decoration: InputDecoration(
+                  labelText: 'Tipo de Vehículo',
+                  border: const OutlineInputBorder(),
+                  labelStyle: GoogleFonts.montserratAlternates(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un tipo de vehículo';
-                    }
-                    return null;
-                  },
-                  keyboardType: TextInputType.text,
                 ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<bool>(
-                  value: widget.espacioEstacionamiento?.ocupado ?? false,
-                  decoration: InputDecoration(
-                    labelText: 'Ocupado',
-                    border: const OutlineInputBorder(),
-                    labelStyle: GoogleFonts.montserratAlternates(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: const Color.fromARGB(255, 73, 128, 237),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingrese un tipo de vehículo';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.text,
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<bool>(
+                value: widget.espacioEstacionamiento?.ocupado ?? false,
+                decoration: InputDecoration(
+                  labelText: 'Ocupado',
+                  border: const OutlineInputBorder(),
+                  labelStyle: GoogleFonts.montserratAlternates(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  ),
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: true,
+                    child: Text(
+                      'Sí',
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
-                  items: const [
-                    DropdownMenuItem(
-                      value: true,
-                      child: Text(
-                        'Sí',
-                        style: TextStyle(
-                            fontSize: 16), // Cambiar el tamaño del texto a 16
-                      ),
+                  DropdownMenuItem(
+                    value: false,
+                    child: Text(
+                      'No',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownMenuItem(
-                      value: false,
-                      child: Text(
-                        'No',
-                        style: TextStyle(
-                            fontSize: 16), // Cambiar el tamaño del texto a 16
-                      ),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    _ocupadoController.text = value.toString();
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Por favor seleccione si está ocupado';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      final espacioEstacionamiento = EspacioEstacionamiento(
-                        idEspacio: int.parse(_idController.text),
-                        nombreEspacio: _nombreController.text,
-                        tipoVehiculo: _tipoVehiculoController.text,
-                        ocupado:
-                            _ocupadoController.text.toLowerCase() == 'true',
-                      );
-                      if (widget.espacioEstacionamiento == null) {
-                        await ApiServiceEspacioEstacionamiento()
-                            .createEspacioEstacionamiento(
-                                espacioEstacionamiento);
-                      } else {
-                        await ApiServiceEspacioEstacionamiento()
-                            .updateEspacioEstacionamiento(
-                                espacioEstacionamiento);
-                      }
-                      context.go('/home');
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 12.0),
-                    textStyle: GoogleFonts.montserratAlternates(
-                        fontSize: 18, fontWeight: FontWeight.w700),
                   ),
-                  child: Text(widget.espacioEstacionamiento == null
-                      ? 'Crear'
-                      : 'Actualizar'),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
+                ],
+                onChanged: (value) {
+                  _ocupadoController.text = value.toString();
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return 'Por favor seleccione si está ocupado';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final espacioEstacionamiento = EspacioEstacionamiento(
+                      idEspacio: int.parse(_idController.text),
+                      nombreEspacio: _nombreController.text,
+                      tipoVehiculo: _tipoVehiculoController.text,
+                      ocupado: _ocupadoController.text.toLowerCase() == 'true',
+                    );
+                    if (widget.espacioEstacionamiento == null) {
+                      await ApiServiceEspacioEstacionamiento()
+                          .createEspacioEstacionamiento(espacioEstacionamiento);
+                    } else {
+                      await ApiServiceEspacioEstacionamiento()
+                          .updateEspacioEstacionamiento(espacioEstacionamiento);
+                    }
                     context.go('/home');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 12.0),
-                    textStyle: GoogleFonts.montserratAlternates(
-                        fontSize: 18, fontWeight: FontWeight.w700),
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 12.0),
+                  textStyle: GoogleFonts.montserratAlternates(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFF497FEB),
                   ),
-                  child: const Text('Ir al Homepage'),
+                  backgroundColor: Colors.white,
+                  side: const BorderSide(
+                    color: Color(0xFF497FEB),
+                    width: 2.0,
+                  ),
                 ),
-              ],
-            ),
+                child: Text(
+                  widget.espacioEstacionamiento == null
+                      ? 'Crear'
+                      : 'Actualizar',
+                  style: GoogleFonts.montserratAlternates(
+                    color: const Color(0xFF497FEB),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
