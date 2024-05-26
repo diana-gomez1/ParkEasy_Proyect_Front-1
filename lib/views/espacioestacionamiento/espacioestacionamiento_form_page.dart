@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/models/espacioestacionamiento.dart';
 import 'package:memes/services/api_services_espacioestacionamiento.dart';
+import 'package:memes/services/api_services_tipovehiculo.dart';
+import 'package:memes/models/tipovehiculo.dart';
 
 class EspacioEstacionamientoFormPage extends StatefulWidget {
   final EspacioEstacionamiento? espacioEstacionamiento;
@@ -25,6 +27,9 @@ class _EspacioEstacionamientoFormPageState
   late TextEditingController _tipoVehiculoController;
   late TextEditingController _ocupadoController;
 
+  List<TipoVehiculo> _tiposVehiculos = [];
+  TipoVehiculo? _selectedTipoVehiculo;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +41,20 @@ class _EspacioEstacionamientoFormPageState
         text: widget.espacioEstacionamiento?.tipoVehiculo ?? '');
     _ocupadoController = TextEditingController(
         text: widget.espacioEstacionamiento?.ocupado.toString() ?? '');
+
+    // Llama a la función para obtener los tipos de vehículos existentes
+    _fetchTiposVehiculos();
+  }
+
+  Future<void> _fetchTiposVehiculos() async {
+    try {
+      final tiposVehiculos = await ApiServicetipovehiculo().getTipoVehiculo();
+      setState(() {
+        _tiposVehiculos = tiposVehiculos;
+      });
+    } catch (e) {
+      // Manejo de errores
+    }
   }
 
   @override
@@ -115,8 +134,8 @@ class _EspacioEstacionamientoFormPageState
                 },
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _tipoVehiculoController,
+              DropdownButtonFormField<TipoVehiculo>(
+                value: _selectedTipoVehiculo,
                 decoration: InputDecoration(
                   labelText: 'Tipo de Vehículo',
                   border: const OutlineInputBorder(),
@@ -126,18 +145,30 @@ class _EspacioEstacionamientoFormPageState
                     color: Colors.black,
                   ),
                 ),
-                style: GoogleFonts.montserratAlternates(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: const Color.fromARGB(255, 73, 128, 237),
-                ),
+                items: _tiposVehiculos
+                    .map((tipo) => DropdownMenuItem<TipoVehiculo>(
+                          value: tipo,
+                          child: Text(
+                            tipo.nombre,
+                            style: const TextStyle(
+                              fontSize:
+                                  16, // Ajusta aquí el tamaño de la fuente
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedTipoVehiculo = value;
+                    _tipoVehiculoController.text = value!.nombre;
+                  });
+                },
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingrese un tipo de vehículo';
+                  if (value == null) {
+                    return 'Por favor seleccione un tipo de vehículo';
                   }
                   return null;
                 },
-                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<bool>(

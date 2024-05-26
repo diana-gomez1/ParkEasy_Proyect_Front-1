@@ -81,7 +81,7 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
         title: Text(
           'Agregar Ingreso Vehículo',
           style: GoogleFonts.montserratAlternates(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
         ),
