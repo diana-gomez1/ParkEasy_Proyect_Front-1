@@ -35,7 +35,6 @@ class _TipoVehiculoListViewState extends State<TipoVehiculoListView> {
                 '    Tipos de Vehículos',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
-                      //color: const Color.fromARGB(255, 73, 128, 237),
                       color: Colors.white,
                     ),
               ),
