@@ -60,7 +60,7 @@ class _FacturaListViewState extends State<FacturaListView> {
           children: [
             Expanded(
               child: Text(
-                '               Facturas',
+                '                 Facturas',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -96,7 +96,7 @@ class _FacturaListViewState extends State<FacturaListView> {
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   child: ListTile(
                     title: Text(
-                      'Factura #${factura.idFactura}',
+                      '              Factura #${factura.idFactura}',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: const Color.fromARGB(255, 73, 128, 237),
@@ -118,15 +118,6 @@ class _FacturaListViewState extends State<FacturaListView> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            context.push(
-                              '/editfactura/${factura.idFactura}?placa=${Uri.encodeComponent(factura.placaVehiculo)}&monto=${factura.montoPagar}&fecha=${factura.fechaSalida?.toString() ?? ''}',
-                            );
-                          },
-                          icon: const Icon(Icons.edit_outlined),
-                          color: const Color.fromARGB(255, 255, 227, 12),
-                        ),
                         IconButton(
                           onPressed: () async {
                             showDialog(
