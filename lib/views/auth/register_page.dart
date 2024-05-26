@@ -1,7 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
@@ -16,6 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _message = '';
+  Color _messageColor = Colors.black;
 
   Future<void> _register() async {
     const String apiUrl =
@@ -39,11 +40,39 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (response.statusCode == 200) {
         setState(() {
-          _message = 'Registro exitoso!';
+          _message = '  ¡Registro exitoso!';
+          _messageColor = const Color.fromARGB(
+              255, 56, 244, 18); // Color rojo para mensaje de error
+        });
+        // Esperar 5 segundos antes de redirigir al usuario
+        Timer(const Duration(seconds: 3), () {
+          GoRouter.of(context).go('/');
+          Timer(const Duration(seconds: 2), () {
+            if (mounted) {
+              // Verificar si el widget está montado
+              setState(() {
+                _message = '';
+                _messageColor = const Color.fromARGB(
+                    255, 56, 244, 18); // Color rojo para mensaje de error
+              });
+            }
+          });
         });
       } else {
         setState(() {
-          _message = 'Error en el registro. Por favor, inténtalo de nuevo.';
+          _message =
+              '             Error en el registro. \n Por favor, inténtalo de nuevo.';
+          _messageColor = Colors.red; // Color rojo para mensaje de error
+        });
+
+        // Esperar 2 segundos antes de limpiar el mensaje de error
+        Timer(const Duration(seconds: 2), () {
+          if (mounted) {
+            // Verificar si el widget está montado
+            setState(() {
+              _message = '';
+            });
+          }
         });
       }
     } catch (error) {
@@ -57,89 +86,104 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: Text(
+          '                  Register',
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+        ),
+        backgroundColor: const Color(0xFF497FEB),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              GoRouter.of(context).go('/');
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset(
+              'assets/images/logo.png',
+              width: 100, // Ajusta el ancho de la imagen según sea necesario
+              height: 100, // Ajusta la altura de la imagen según sea necesario
+            ),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: 'Nombre',
-                labelStyle: GoogleFonts.montserratAlternates(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                labelStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF497FEB),
+                    ),
               ),
-              style: GoogleFonts.montserratAlternates(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
             ),
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: GoogleFonts.montserratAlternates(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                labelStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF497FEB),
+                    ),
               ),
-              style: GoogleFonts.montserratAlternates(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
             ),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: GoogleFonts.montserratAlternates(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                labelStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF497FEB),
+                    ),
               ),
-              style: GoogleFonts.montserratAlternates(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
               obscureText: true,
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: _register,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0, vertical: 12.0),
-                textStyle: GoogleFonts.montserratAlternates(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 2.0),
+                textStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                backgroundColor: Colors.white,
+                side: const BorderSide(
+                  color: Color(0xFF497FEB),
+                  width: 2.0,
                 ),
               ),
               child: const Text('Register'),
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 5.0),
             Text(
               _message,
-              style: const TextStyle(color: Colors.red),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: _messageColor,
+                  ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/home');
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0, vertical: 12.0),
-                textStyle: GoogleFonts.montserratAlternates(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              child: const Text('Ir al Homepage'),
-            ),
           ],
         ),
       ),

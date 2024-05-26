@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -36,15 +37,36 @@ class _LoginPageState extends State<LoginPage> {
         }),
       );
 
+      // Después de la sección que establece _message en caso de un registro exitoso o un error
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('userData', json.encode(responseData));
         GoRouter.of(context).go('/home');
+
+        // Esperar 2 segundos antes de limpiar el mensaje
+        Timer(const Duration(seconds: 2), () {
+          if (mounted) {
+            // Verificar si el widget está montado
+            setState(() {
+              _message = '';
+            });
+          }
+        });
       } else {
         setState(() {
           _message =
-              'Error al iniciar sesión. Por favor, verifica tus credenciales.';
+              '           Error al iniciar sesión.\nPor favor, verifica tus credenciales.';
+        });
+
+        // Esperar 2 segundos antes de limpiar el mensaje de error
+        Timer(const Duration(seconds: 2), () {
+          if (mounted) {
+            // Verificar si el widget está montado
+            setState(() {
+              _message = '';
+            });
+          }
         });
       }
     } catch (error) {
@@ -59,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '                   Login',
+          '    Login ParkEasyApp',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -75,8 +97,8 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Image.asset(
               'assets/images/logo.png',
-              width: 160, // Ajusta el ancho de la imagen según sea necesario
-              height: 160, // Ajusta la altura de la imagen según sea necesario
+              width: 185, // Ajusta el ancho de la imagen según sea necesario
+              height: 185, // Ajusta la altura de la imagen según sea necesario
             ),
             TextField(
               controller: _emailController,
@@ -92,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                   ),
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 2.0),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
@@ -116,12 +138,15 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: login,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 12.0),
-                    textStyle:
-                        Theme.of(context).textTheme.titleMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        horizontal: 18.0, vertical: 6.0),
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Colors.red, // Cambia el color de la fuente a rojo
+                        ),
                     backgroundColor: const Color.fromARGB(
                         255, 255, 255, 255), // Color del botón
                     side: const BorderSide(
@@ -135,12 +160,15 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () => GoRouter.of(context).go('/register'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 12.0),
-                    textStyle:
-                        Theme.of(context).textTheme.titleMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        horizontal: 18.0, vertical: 6.0),
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Colors.red, // Cambia el color de la fuente a rojo
+                        ),
                     backgroundColor: const Color.fromARGB(
                         255, 255, 255, 255), // Color del botón
                     side: const BorderSide(
@@ -152,10 +180,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 5.0),
             Text(
               _message,
-              style: const TextStyle(color: Colors.red),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .copyWith(fontWeight: FontWeight.bold, color: Colors.red),
             ),
           ],
         ),
