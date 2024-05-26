@@ -3,17 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/models/ingreso_vehiculos.dart';
-//import 'package:memes/models/tipo_vehiculo.dart'; // Importa el modelo TipoVehiculo
 import 'package:memes/models/tipovehiculo.dart';
 import 'package:memes/services/api_services_espacioestacionamiento.dart';
 import 'package:memes/services/api_services_ingresovehiculos.dart';
 import 'package:memes/services/api_services_tipovehiculo.dart';
 
 class IngresoVehiculoFormPage extends StatefulWidget {
-  const IngresoVehiculoFormPage({
-    super.key,
-  });
+  const IngresoVehiculoFormPage({super.key});
 
   @override
   _IngresoVehiculoFormPageState createState() =>
@@ -29,18 +27,15 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
   final TextEditingController _idEspacioController = TextEditingController();
 
   List<int> _espaciosDisponibles = [];
-
-  List<TipoVehiculo> _tiposVehiculos =
-      []; // Lista para almacenar los tipos de vehículos
-  TipoVehiculo?
-      _selectedTipoVehiculo; // Variable para almacenar el tipo de vehículo seleccionado
+  List<TipoVehiculo> _tiposVehiculos = [];
+  TipoVehiculo? _selectedTipoVehiculo;
 
   @override
   void initState() {
     super.initState();
     _fechaIngresoController.text = DateTime.now().toString();
     _fetchEspaciosDisponibles();
-    _fetchTiposVehiculos(); // Llama a la función para obtener los tipos de vehículos
+    _fetchTiposVehiculos();
   }
 
   Future<void> _fetchEspaciosDisponibles() async {
@@ -58,22 +53,24 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
         print('Error al obtener espacios disponibles: $e');
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al obtener espacios disponibles: $e'),
-        ),
+        SnackBar(content: Text('Error al obtener espacios disponibles: $e')),
       );
     }
   }
 
   Future<void> _fetchTiposVehiculos() async {
     try {
-      final tipos = await ApiServicetipovehiculo()
-          .getTipoVehiculo(); // Reemplaza ApiServiceTipoVehiculo con tu servicio real
+      final tipos = await ApiServicetipovehiculo().getTipoVehiculo();
       setState(() {
         _tiposVehiculos = tipos;
       });
     } catch (e) {
-      // Manejo de errores
+      if (kDebugMode) {
+        print('Error al obtener tipos de vehículos: $e');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al obtener tipos de vehículos: $e')),
+      );
     }
   }
 
@@ -83,10 +80,18 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
       appBar: AppBar(
         title: Text(
           'Agregar Ingreso Vehículo',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 24, 99, 250),
-              ),
+          style: GoogleFonts.montserratAlternates(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: const Color(0xFF497FEB),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          color: const Color.fromARGB(255, 56, 244, 18),
+          onPressed: () {
+            context.go('/home');
+          },
         ),
       ),
       body: Padding(
@@ -99,11 +104,13 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                 controller: _placaVehiculoController,
                 label: 'Placa del Vehículo',
               ),
+              const SizedBox(height: 16), // Espacio vertical
               _buildTextField(
                 controller: _fechaIngresoController,
                 label: 'Fecha de Ingreso',
                 enabled: false,
               ),
+              const SizedBox(height: 16), // Espacio vertical
               _buildTipoVehiculoDropdown(
                 label: 'Tipo de Vehículo',
                 value: _selectedTipoVehiculo,
@@ -114,6 +121,7 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                   });
                 },
               ),
+              const SizedBox(height: 16), // Espacio vertical
               _buildDropdownField(
                 label: 'ID de Espacio',
                 value: _idEspacioController.text.isEmpty
@@ -126,15 +134,14 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                   });
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20), // Espacio vertical
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final nuevoIngreso = IngresoVehiculos(
                       placaVehiculo: _placaVehiculoController.text,
                       fechaIngreso: _fechaIngresoController.text,
-                      tipoVehiculo: _selectedTipoVehiculo!
-                          .nombre, // Usa el nombre del tipo de vehículo seleccionado
+                      tipoVehiculo: _selectedTipoVehiculo!.nombre,
                       idEspacio: int.parse(_idEspacioController.text),
                       fechaSalida: null,
                     );
@@ -144,9 +151,8 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                           .createIngresoVehiculo(nuevoIngreso);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content:
-                              Text('Ingreso de vehículo agregado exitosamente'),
-                        ),
+                            content: Text(
+                                'Ingreso de vehículo agregado exitosamente')),
                       );
                       context.go('/home');
                     } catch (e) {
@@ -155,14 +161,31 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
                       }
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content:
-                              Text('Error al agregar ingreso de vehículo: $e'),
-                        ),
+                            content: Text(
+                                'Error al agregar ingreso de vehículo: $e')),
                       );
                     }
                   }
                 },
-                child: const Text('Agregar'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 12.0),
+                  textStyle: GoogleFonts.montserratAlternates(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  backgroundColor: Colors.white,
+                  side: const BorderSide(
+                    color: Color(0xFF497FEB),
+                    width: 2.0,
+                  ),
+                ),
+                child: Text(
+                  'Agregar',
+                  style: GoogleFonts.montserratAlternates(
+                    color: const Color(0xFF497FEB),
+                  ),
+                ),
               ),
             ],
           ),
@@ -180,20 +203,22 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
     return DropdownButtonFormField<TipoVehiculo>(
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontSize: 18,
-            ),
+        labelStyle: GoogleFonts.montserratAlternates(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
       ),
       value: value,
-      items: items
-          .map((item) => DropdownMenuItem<TipoVehiculo>(
-                value: item,
-                child: Text(
-                  item.nombre, // Usa el nombre del tipo de vehículo como texto del elemento desplegable
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ))
-          .toList(),
+      items: items.map((item) {
+        return DropdownMenuItem<TipoVehiculo>(
+          value: item,
+          child: Text(
+            item.nombre,
+            style: const TextStyle(fontSize: 16),
+          ),
+        );
+      }).toList(),
       onChanged: onChanged,
       validator: (value) {
         if (value == null) {
@@ -214,10 +239,17 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-              // Corregido el uso de `titleMedium` por `headline6`
-              fontSize: 18,
-            ),
+        labelStyle: GoogleFonts.montserratAlternates(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
+        border: const OutlineInputBorder(),
+      ),
+      style: GoogleFonts.montserratAlternates(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: const Color.fromARGB(255, 73, 128, 237),
       ),
       keyboardType: keyboardType,
       enabled: enabled,
@@ -239,21 +271,22 @@ class _IngresoVehiculoFormPageState extends State<IngresoVehiculoFormPage> {
     return DropdownButtonFormField<int>(
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-              // Corregido el uso de `titleMedium` por `headline6`
-              fontSize: 18,
-            ),
+        labelStyle: GoogleFonts.montserratAlternates(
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
       ),
       value: value,
-      items: items
-          .map((item) => DropdownMenuItem<int>(
-                value: item,
-                child: Text(
-                  item.toString(),
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ))
-          .toList(),
+      items: items.map((item) {
+        return DropdownMenuItem<int>(
+          value: item,
+          child: Text(
+            item.toString(),
+            style: const TextStyle(fontSize: 16),
+          ),
+        );
+      }).toList(),
       onChanged: onChanged,
       validator: (value) {
         if (value == null) {
