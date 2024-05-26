@@ -34,7 +34,7 @@ class _EspacioEstacionamientoListViewState
           'Espacios Parking Lot',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(255, 24, 99, 250)),
+              color: const Color.fromARGB(255, 255, 255, 255)),
         ),
         actions: [
           Padding(
@@ -42,8 +42,8 @@ class _EspacioEstacionamientoListViewState
             child: IconButton(
               // ignore: prefer_const_constructors
               icon: Icon(
-                Icons.add_box_sharp,
-                color: const Color.fromARGB(255, 24, 99, 250),
+                Icons.add_circle_outline_sharp,
+                color: const Color.fromARGB(255, 56, 244, 18),
               ),
               onPressed: () {
                 context.go('/espacioestacionamientoagregar');
@@ -51,6 +51,7 @@ class _EspacioEstacionamientoListViewState
             ),
           ),
         ],
+        backgroundColor: const Color(0xFF497FEB),
       ),
       body: FutureBuilder<List<EspacioEstacionamiento>>(
         future: futureEspaciosEstacionamiento,
@@ -167,7 +168,8 @@ class _EspacioEstacionamientoListViewState
           onPressed: () {
             _showDeleteConfirmationDialog(espacioEstacionamiento);
           },
-          icon: const Icon(Icons.delete),
+          icon: const Icon(Icons.delete_forever_outlined),
+          color: const Color.fromARGB(255, 239, 44, 33),
         ),
       ),
     );

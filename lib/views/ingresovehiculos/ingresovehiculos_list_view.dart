@@ -29,10 +29,10 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Ingreso de Vehículos',
+          ' Ingreso de Vehículos',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 73, 128, 237),
+                color: const Color.fromARGB(255, 255, 255, 255),
               ),
         ),
         actions: [
@@ -41,7 +41,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
             child: IconButton(
               icon: const Icon(
                 Icons.add_circle_outline_sharp,
-                color: Color.fromARGB(255, 73, 128, 237),
+                color: Color.fromARGB(255, 56, 244, 18),
               ),
               onPressed: () {
                 context.go('/ingresovehiculoagregar');
@@ -49,6 +49,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
             ),
           ),
         ],
+        backgroundColor: const Color(0xFF497FEB),
       ),
       body: FutureBuilder<List<IngresoVehiculos>>(
         future: futureIngresoVehiculos,
@@ -154,7 +155,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
               _showDeleteConfirmationDialog(ingresoVehiculo);
             },
             icon: const Icon(Icons.delete_forever_outlined),
-            color: const Color.fromARGB(255, 73, 128, 237)),
+            color: const Color.fromARGB(255, 239, 44, 33)),
       ),
     );
   }

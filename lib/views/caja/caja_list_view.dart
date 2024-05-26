@@ -3,9 +3,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:memes/models/caja.dart';
 import 'package:memes/services/api_services_caja.dart';
-import 'package:memes/config/theme/app_theme.dart';
 
 class CajaListView extends StatefulWidget {
   const CajaListView({super.key});
@@ -26,7 +26,29 @@ class _CajaListViewState extends State<CajaListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Caja')),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                '                   Caja',
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                context.go('/cajaagregar');
+              },
+              icon: const Icon(Icons.add_circle_outline_sharp),
+              color: const Color.fromARGB(255, 56, 244, 18),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF497FEB),
+      ),
       body: FutureBuilder<List<Caja>>(
         future: futureCaja,
         builder: (context, snapshot) {
@@ -35,80 +57,100 @@ class _CajaListViewState extends State<CajaListView> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            final caja = snapshot.data!;
+            final cajaList = snapshot.data!;
             return ListView.builder(
-              itemCount: caja.length,
+              itemCount: cajaList.length,
               itemBuilder: (context, index) {
-                final caja_ = caja[index];
-                return ExpansionTile(
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                final caja = cajaList[index];
+                return Card(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            caja.nombreCaja,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF497FEB),
+                                ),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        _buildInfoRow(
+                          'Saldo:',
+                          '\$${caja.saldo}',
+                          'Nombre administrador:',
+                          caja.nombreAdmin,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              '${caja_.idCaja}: ${caja_.nombreCaja}',
-                              style:
-                                  AppTheme().getTheme().textTheme.titleMedium,
+                            IconButton(
+                              onPressed: () async {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Confirmación'),
+                                    content: const Text(
+                                      '¿Estás seguro de que deseas eliminar esta caja?',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Cancelar'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          try {
+                                            await ApiServiceCaja()
+                                                .deleteCaja(caja.idCaja);
+                                            setState(() {
+                                              futureCaja =
+                                                  ApiServiceCaja().getCaja();
+                                            });
+                                            Navigator.of(context).pop();
+                                            context.go('/home');
+                                          } catch (e) {
+                                            if (kDebugMode) {
+                                              print('Error al eliminar: $e');
+                                            }
+                                          }
+                                        },
+                                        child: const Text('Eliminar'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.delete_forever_outlined,
+                                color: Colors.red,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                context.go(
+                                  '/editcaja/${caja.idCaja}?nombreCaja=${Uri.encodeComponent(caja.nombreCaja)}&saldo=${caja.saldo}&nombreAdmin=${Uri.encodeComponent(caja.nombreAdmin)}',
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.edit_outlined,
+                                color: Color.fromARGB(255, 255, 227, 12),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Confirmación'),
-                              content: const Text(
-                                '¿Estás seguro de que deseas eliminar esta caja?',
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Cancelar'),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    try {
-                                      await ApiServiceCaja().deleteCaja(
-                                        caja_.idCaja,
-                                      );
-                                      setState(() {
-                                        futureCaja = ApiServiceCaja().getCaja();
-                                      });
-                                      Navigator.of(context).pop();
-                                      context.go('/home');
-                                    } catch (e) {
-                                      if (kDebugMode) {
-                                        print('Error al eliminar: $e');
-                                      }
-                                    }
-                                  },
-                                  child: const Text('Eliminar'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.delete_forever),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.go(
-                            '/editcaja/${caja_.idCaja}?nombreCaja=${Uri.encodeComponent(caja_.nombreCaja)}&saldo=${caja_.saldo}&nombreAdmin=${Uri.encodeComponent(caja_.nombreAdmin)}',
-                          );
-                        },
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
-                  subtitle: Text(
-                    'Saldo : \$${caja_.saldo}',
-                    style: AppTheme().getTheme().textTheme.titleSmall,
+                      ],
+                    ),
                   ),
                 );
               },
@@ -116,12 +158,71 @@ class _CajaListViewState extends State<CajaListView> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go('/cajaagregar');
-        },
-        child: const Icon(Icons.add_box_sharp),
-      ),
+    );
+  }
+
+  Widget _buildInfoRow(
+    String label1,
+    String value1,
+    String label2,
+    String value2,
+  ) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label1,
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                value1,
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                  color: const Color.fromARGB(255, 73, 128, 237),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label2,
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  value2,
+                  style: GoogleFonts.montserratAlternates(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                    color: const Color.fromARGB(255, 73, 128, 237),
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

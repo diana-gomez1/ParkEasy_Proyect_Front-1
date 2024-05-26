@@ -28,9 +28,10 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
           '    Info establecimiento',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 73, 128, 237),
+                color: Colors.white,
               ),
         ),
+        backgroundColor: const Color(0xFF497FEB),
       ),
       body: FutureBuilder<List<Establecimiento>>(
         future: futureEstablecimientos,
