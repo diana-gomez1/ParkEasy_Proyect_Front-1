@@ -77,7 +77,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
   }
 
   Widget _buildIngresoVehiculoCard(IngresoVehiculos ingresoVehiculo) {
-    const placaText = 'Placa del Vehículo: ';
+    const placaText = '     Placa del Vehículo: ';
     final placaValue = ingresoVehiculo.placaVehiculo;
 
     // Formatea la fecha de ingreso
@@ -93,14 +93,14 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
               TextSpan(
                 text: placaText,
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 21,
+                      fontSize: 20,
                       color: const Color.fromARGB(255, 0, 0, 0),
                     ),
               ),
               TextSpan(
                 text: placaValue,
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontSize: 18,
+                      fontSize: 21,
                       color: const Color.fromARGB(255, 73, 128, 237),
                     ),
               ),
@@ -112,17 +112,17 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
           children: [
             RichText(
               text: TextSpan(
-                text: 'Fecha de Ingreso: ',
+                text: '     Fecha de Ingreso: ',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 21,
+                      fontSize: 20,
                       color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                 children: [
                   TextSpan(
                     text: fechaIngreso, // Utiliza la fecha formateada aquí
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontSize: 18,
-                          color: const Color.fromARGB(255, 73, 128, 237),
+                          fontSize: 21,
+                          color: const Color.fromARGB(255, 255, 227, 12),
                         ),
                   ),
                 ],
@@ -130,19 +130,17 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Tipo de Vehículo: ',
+                text: '     Tipo de Vehículo: ',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 21,
+                      fontSize: 20,
                       color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                 children: [
                   TextSpan(
                     text: ingresoVehiculo.tipoVehiculo,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontSize: 18,
-                          color: const Color.fromARGB(255, 73, 128, 237),
-                          // azul 255, 73, 128, 237
-                          // negro 255, 0, 0, 0
+                          fontSize: 21,
+                          color: const Color.fromARGB(255, 56, 244, 18),
                         ),
                   ),
                 ],
