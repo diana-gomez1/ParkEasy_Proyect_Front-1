@@ -83,16 +83,25 @@ class _TipoVehiculoListViewState extends State<TipoVehiculoListView> {
                                 ),
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        const SizedBox(height: 1),
                         _buildInfoRow(
                             'Valor por hora:', '\$${tipoVehiculo.valorHora}',
-                            fontSizeLabel: 16.0, fontSizeValue: 16.0),
+                            fontSizeLabel: 18.0,
+                            fontSizeValue: 19.0,
+                            fieldColor: Colors.black, // Color del campo
+                            valueColor: const Color.fromARGB(255, 56, 244, 18)),
                         _buildInfoRow(
                             'Valor por día:', '\$${tipoVehiculo.valorDia}',
-                            fontSizeLabel: 16.0, fontSizeValue: 16.0),
+                            fontSizeLabel: 18.0,
+                            fontSizeValue: 19.0,
+                            fieldColor: Colors.black, // Color del campo
+                            valueColor: const Color.fromARGB(255, 56, 244, 18)),
                         _buildInfoRow(
                             'Valor por mes:', '\$${tipoVehiculo.valorMes}',
-                            fontSizeLabel: 16.0, fontSizeValue: 16.0),
+                            fontSizeLabel: 18.0,
+                            fontSizeValue: 19.0,
+                            fieldColor: Colors.black, // Color del campo
+                            valueColor: const Color.fromARGB(255, 56, 244, 18)),
                         const SizedBox(height: 2),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -163,8 +172,14 @@ class _TipoVehiculoListViewState extends State<TipoVehiculoListView> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value,
-      {double fontSizeLabel = 16.0, double fontSizeValue = 16.0}) {
+  Widget _buildInfoRow(
+    String label,
+    String value, {
+    Color? fieldColor,
+    Color? valueColor,
+    double fontSizeLabel = 20.0,
+    double fontSizeValue = 20.0,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
@@ -174,8 +189,10 @@ class _TipoVehiculoListViewState extends State<TipoVehiculoListView> {
             label,
             style: GoogleFonts.montserratAlternates(
               fontSize: fontSizeLabel,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              color: fieldColor ??
+                  Colors
+                      .black, // Usar el color del campo si se proporciona, de lo contrario, usar negro
             ),
           ),
           const SizedBox(width: 10),
@@ -183,8 +200,8 @@ class _TipoVehiculoListViewState extends State<TipoVehiculoListView> {
             value,
             style: GoogleFonts.montserratAlternates(
               fontSize: fontSizeValue,
-              fontWeight: FontWeight.w500,
-              color: const Color.fromARGB(255, 73, 128, 237),
+              fontWeight: FontWeight.w600,
+              color: valueColor ?? const Color.fromARGB(255, 73, 128, 237),
             ),
           ),
         ],

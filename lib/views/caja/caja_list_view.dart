@@ -86,8 +86,11 @@ class _CajaListViewState extends State<CajaListView> {
                         _buildInfoRow(
                           'Saldo:',
                           '\$${caja.saldo}',
-                          '               Administrador:',
+                          'Administrador:',
                           caja.nombreAdmin,
+                          fieldColor: Colors.black, // Color del campo
+                          valueColor: const Color.fromARGB(
+                              255, 56, 244, 18), // Color del valor
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -162,11 +165,8 @@ class _CajaListViewState extends State<CajaListView> {
   }
 
   Widget _buildInfoRow(
-    String label1,
-    String value1,
-    String label2,
-    String value2,
-  ) {
+      String label1, String value1, String label2, String value2,
+      {Color? fieldColor, Color? valueColor}) {
     return Column(
       children: [
         Padding(
@@ -177,18 +177,18 @@ class _CajaListViewState extends State<CajaListView> {
               Text(
                 label1,
                 style: GoogleFonts.montserratAlternates(
-                  fontSize: 16.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: fieldColor ?? Colors.black,
                 ),
               ),
               const SizedBox(width: 10),
               Text(
                 value1,
                 style: GoogleFonts.montserratAlternates(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                  color: const Color.fromARGB(255, 73, 128, 237),
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w700,
+                  color: valueColor ?? const Color.fromARGB(255, 73, 128, 237),
                 ),
               ),
             ],
@@ -202,21 +202,18 @@ class _CajaListViewState extends State<CajaListView> {
               Text(
                 label2,
                 style: GoogleFonts.montserratAlternates(
-                  fontSize: 16.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: fieldColor ?? Colors.black,
                 ),
               ),
               const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  value2,
-                  style: GoogleFonts.montserratAlternates(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: const Color.fromARGB(255, 73, 128, 237),
-                  ),
-                  overflow: TextOverflow.ellipsis,
+              Text(
+                value2,
+                style: GoogleFonts.montserratAlternates(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w700,
+                  color: const Color.fromARGB(255, 73, 128, 237),
                 ),
               ),
             ],

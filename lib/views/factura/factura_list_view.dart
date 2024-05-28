@@ -105,7 +105,7 @@ class _FacturaListViewState extends State<FacturaListView> {
                     title: Text(
                       '              Factura #${factura.idFactura}',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                             color: const Color.fromARGB(255, 73, 128, 237),
                           ),
                     ),
@@ -115,15 +115,18 @@ class _FacturaListViewState extends State<FacturaListView> {
                         _buildInfoRow(
                           'Placa Vehículo:',
                           factura.placaVehiculo,
+                          fieldColor: Colors.black, // Color del campo
+                          valueColor: const Color.fromARGB(255, 255, 227, 12),
                         ),
                         _buildInfoRow(
                           'Monto a Pagar:',
                           '\$${factura.montoPagar}',
+                          fieldColor: Colors.black, // Color del campo
+                          valueColor: const Color.fromARGB(255, 56, 244, 18),
                         ),
-                        _buildInfoRow(
-                          'Fecha de Salida:',
-                          formattedFechaSalida,
-                        ),
+                        _buildInfoRow('Fecha Salida:', formattedFechaSalida,
+                            fieldColor: Colors.black, // Color del campo
+                            valueColor: const Color(0xFF497FEB)),
                       ],
                     ),
                     trailing: Row(
@@ -171,27 +174,30 @@ class _FacturaListViewState extends State<FacturaListView> {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(String label, String value,
+      {Color? fieldColor, Color? valueColor}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             label,
             style: GoogleFonts.montserratAlternates(
-              fontSize: 16.0,
+              fontSize: 18.0,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: fieldColor ??
+                  Colors
+                      .black, // Usar el color del campo si se proporciona, de lo contrario, usar negro
             ),
           ),
           const SizedBox(width: 10),
           Text(
             value,
             style: GoogleFonts.montserratAlternates(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-              color: const Color.fromARGB(255, 73, 128, 237),
+              fontSize: 18.0,
+              fontWeight: FontWeight.w700,
+              color: valueColor ?? const Color.fromARGB(255, 73, 128, 237),
             ),
           ),
         ],
