@@ -32,7 +32,7 @@ class _TipoVehiculoListViewState extends State<TipoVehiculoListView> {
           children: [
             Expanded(
               child: Text(
-                '    Tipos de Vehículos',
+                '          Tipos de Vehículos',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

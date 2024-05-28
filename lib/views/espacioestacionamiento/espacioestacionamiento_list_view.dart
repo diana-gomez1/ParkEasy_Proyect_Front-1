@@ -26,12 +26,11 @@ class _EspacioEstacionamientoListViewState
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Espacios Parking Lot',
+          '     Espacios Parking Lot',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: const Color.fromARGB(255, 255, 255, 255)),
@@ -111,18 +110,21 @@ class _EspacioEstacionamientoListViewState
     return Column(
       children: [
         Container(
-          width: 20,
-          height: 20,
+          width: 23,
+          height: 23,
           color: ocupado
-              ? const Color.fromARGB(234, 224, 84, 76)
-              : const Color.fromARGB(255, 110, 226, 126),
+              ? const Color.fromARGB(255, 239, 44, 33)
+              : const Color.fromARGB(255, 102, 243, 109),
           margin: const EdgeInsets.only(bottom: 4),
         ),
         Text(
           espacioEstacionamiento.nombreEspacio,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w900,
-                fontSize: 12,
+                color: ocupado
+                    ? const Color.fromARGB(255, 239, 44, 33)
+                    : const Color.fromARGB(255, 56, 244, 18),
+                fontSize: 14,
               ),
         ),
       ],
@@ -133,43 +135,75 @@ class _EspacioEstacionamientoListViewState
     EspacioEstacionamiento espacioEstacionamiento,
   ) {
     final bool ocupado = espacioEstacionamiento.ocupado;
-    final Color color = ocupado
-        ? const Color.fromARGB(234, 224, 84, 76)
-        : const Color.fromARGB(255, 110, 226, 126);
+    final Color borderColor = ocupado
+        ? const Color.fromARGB(255, 239, 44, 33)
+        : const Color.fromARGB(255, 56, 244, 18);
 
     return Card(
-      color: color,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
-        title: Text(
-          'Nombre del lugar --> ${espacioEstacionamiento.nombreEspacio}',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 18, // Tamaño de fuente ajustado
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: borderColor, width: 2.0),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: ListTile(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
+          title: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Nombre del lugar : ',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 20,
+                        color: Colors.black, // Color del campo
+                      ),
+                ),
+                TextSpan(
+                  text: espacioEstacionamiento.nombreEspacio,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 22,
+                        color: ocupado
+                            ? const Color.fromARGB(255, 239, 44, 33)
+                            : const Color.fromARGB(255, 56, 244, 18),
+                      ),
+                ),
+              ],
+            ),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Tipo de vehículo: ',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontSize: 20,
+                            color: Colors.black, // Color del campo
+                          ),
+                    ),
+                    TextSpan(
+                      text: espacioEstacionamiento.tipoVehiculo,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontSize: 22,
+                            color: ocupado
+                                ? const Color.fromARGB(255, 239, 44, 33)
+                                : const Color.fromARGB(255, 56, 244, 18),
+                          ),
+                    ),
+                  ],
+                ),
               ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '¿Estado? --> ${ocupado ? "Ocupado" : "Libre"}',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 18, // Tamaño de fuente ajustado
-                  ),
-            ),
-            Text(
-              'Tipo de vehículo --> ${espacioEstacionamiento.tipoVehiculo}',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 18, // Tamaño de fuente ajustado
-                  ),
-            ),
-          ],
-        ),
-        trailing: IconButton(
-          onPressed: () {
-            _showDeleteConfirmationDialog(espacioEstacionamiento);
-          },
-          icon: const Icon(Icons.delete_forever_outlined),
-          color: const Color.fromARGB(255, 239, 44, 33),
+            ],
+          ),
+          trailing: IconButton(
+            onPressed: () {
+              _showDeleteConfirmationDialog(espacioEstacionamiento);
+            },
+            icon: const Icon(Icons.delete_forever_outlined),
+            color: const Color.fromARGB(255, 239, 44, 33),
+          ),
         ),
       ),
     );

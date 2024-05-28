@@ -61,7 +61,7 @@ class _FacturaListViewState extends State<FacturaListView> {
           children: [
             Expanded(
               child: Text(
-                '                 Facturas',
+                '                  Facturas',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

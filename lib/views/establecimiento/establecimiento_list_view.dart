@@ -25,7 +25,7 @@ class _EstablecimientoListViewState extends State<EstablecimientoListView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '    Info establecimiento',
+          '       Info establecimiento',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

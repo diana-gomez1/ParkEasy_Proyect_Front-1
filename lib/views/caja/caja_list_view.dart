@@ -31,7 +31,7 @@ class _CajaListViewState extends State<CajaListView> {
           children: [
             Expanded(
               child: Text(
-                '                   Caja',
+                '                     Caja',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

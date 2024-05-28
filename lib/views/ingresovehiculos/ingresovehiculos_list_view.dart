@@ -29,7 +29,7 @@ class _IngresoVehiculoListViewState extends State<IngresoVehiculoListView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          ' Ingreso de Vehículos',
+          '     Ingreso de Vehículos',
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 255, 255, 255),
