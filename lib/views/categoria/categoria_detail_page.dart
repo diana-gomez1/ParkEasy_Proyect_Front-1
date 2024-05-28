@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:memes/models/categoria.dart';
-import 'package:memes/services/api_services.dart';
+import 'package:parkeasy/models/categoria.dart';
+import 'package:parkeasy/services/api_services.dart';
 
 class CategoriaDetailPage extends StatelessWidget {
   final int id;

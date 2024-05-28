@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:memes/models/ingreso_vehiculos.dart';
-import 'package:memes/models/tipovehiculo.dart';
-import 'package:memes/services/api_services_espacioestacionamiento.dart';
-import 'package:memes/services/api_services_ingresovehiculos.dart';
-import 'package:memes/services/api_services_tipovehiculo.dart';
+import 'package:parkeasy/models/ingreso_vehiculos.dart';
+import 'package:parkeasy/models/tipovehiculo.dart';
+import 'package:parkeasy/services/api_services_espacioestacionamiento.dart';
+import 'package:parkeasy/services/api_services_ingresovehiculos.dart';
+import 'package:parkeasy/services/api_services_tipovehiculo.dart';
 
 class IngresoVehiculoFormPage extends StatefulWidget {
   const IngresoVehiculoFormPage({super.key});

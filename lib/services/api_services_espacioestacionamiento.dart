@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:memes/models/espacioestacionamiento.dart';
+import 'package:parkeasy/models/espacioestacionamiento.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:memes/models/ingreso_vehiculos.dart';
-import 'package:memes/services/api_services_ingresovehiculos.dart';
+import 'package:parkeasy/models/ingreso_vehiculos.dart';
+import 'package:parkeasy/services/api_services_ingresovehiculos.dart';
 
 class IngresoVehiculoListView extends StatefulWidget {
   const IngresoVehiculoListView({super.key});

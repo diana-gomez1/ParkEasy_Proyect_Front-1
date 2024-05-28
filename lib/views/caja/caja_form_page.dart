@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:memes/models/caja.dart';
-import 'package:memes/services/api_services_caja.dart';
+import 'package:parkeasy/models/caja.dart';
+import 'package:parkeasy/services/api_services_caja.dart';
 
 class CajaFormPage extends StatefulWidget {
   final Caja? caja;

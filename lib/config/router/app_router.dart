@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:memes/models/establecimiento.dart';
-import 'package:memes/models/tipovehiculo.dart';
-import 'package:memes/models/factura.dart';
-import 'package:memes/models/caja.dart'; // Importar el modelo de Caja
-import 'package:memes/services/api_services_espacioestacionamiento.dart';
-import 'package:memes/services/api_services_ingresovehiculos.dart';
-//import 'package:memes/services/api_services_ingresovehiculos.dart';
-import 'package:memes/views/caja/caja_list_view.dart';
-import 'package:memes/views/caja/caja_form_page.dart'; // Importar la vista del formulario de Caja
-import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_form_page.dart';
-import 'package:memes/views/espacioestacionamiento/espacioestacionamiento_list_view.dart';
-// import 'package:memes/services/api-services_establecimiento.dart';
-import 'package:memes/views/establecimiento/establecimiento_list_view.dart';
-import 'package:memes/views/factura/factura_form_page.dart';
-import 'package:memes/views/factura/factura_list_view.dart';
-import 'package:memes/views/ingresovehiculos/ingresovehiculos_form_page.dart';
-//import 'package:memes/views/ingresovehiculos/ingresovehiculos_form_page.dart';
-import 'package:memes/views/ingresovehiculos/ingresovehiculos_list_view.dart';
-import 'package:memes/views/import_views.dart';
+// import 'package:parkeasy/models/establecimiento.dart';
+import 'package:parkeasy/models/tipovehiculo.dart';
+import 'package:parkeasy/models/factura.dart';
+import 'package:parkeasy/models/caja.dart'; // Importar el modelo de Caja
+import 'package:parkeasy/services/api_services_espacioestacionamiento.dart';
+import 'package:parkeasy/services/api_services_ingresovehiculos.dart';
+//import 'package:parkeasy/services/api_services_ingresovehiculos.dart';
+import 'package:parkeasy/views/caja/caja_list_view.dart';
+import 'package:parkeasy/views/caja/caja_form_page.dart'; // Importar la vista del formulario de Caja
+import 'package:parkeasy/views/espacioestacionamiento/espacioestacionamiento_form_page.dart';
+import 'package:parkeasy/views/espacioestacionamiento/espacioestacionamiento_list_view.dart';
+// import 'package:parkeasy/services/api-services_establecimiento.dart';
+import 'package:parkeasy/views/establecimiento/establecimiento_list_view.dart';
+import 'package:parkeasy/views/factura/factura_form_page.dart';
+import 'package:parkeasy/views/factura/factura_list_view.dart';
+import 'package:parkeasy/views/ingresovehiculos/ingresovehiculos_form_page.dart';
+//import 'package:parkeasy/views/ingresovehiculos/ingresovehiculos_form_page.dart';
+import 'package:parkeasy/views/ingresovehiculos/ingresovehiculos_list_view.dart';
+import 'package:parkeasy/views/import_views.dart';
 
 // GoRouter configuration
 final appRouter = GoRouter(

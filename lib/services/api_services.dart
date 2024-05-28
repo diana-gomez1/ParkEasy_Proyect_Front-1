@@ -1,4 +1,4 @@
-import 'package:memes/models/categoria.dart';
+import 'package:parkeasy/models/categoria.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

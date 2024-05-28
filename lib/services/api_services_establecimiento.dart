@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:memes/models/establecimiento.dart';
+import 'package:parkeasy/models/establecimiento.dart';
 
 class ApiServiceEstablecimiento {
   static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';

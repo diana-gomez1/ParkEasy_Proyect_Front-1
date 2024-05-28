@@ -1,7 +1,7 @@
 // lib/views/categoria_list_view.dart
 import 'package:flutter/material.dart';
-import 'package:memes/models/categoria.dart';
-import 'package:memes/services/api_services.dart';
+import 'package:parkeasy/models/categoria.dart';
+import 'package:parkeasy/services/api_services.dart';
 import 'package:go_router/go_router.dart';
 
 class CategoriaListView extends StatefulWidget {

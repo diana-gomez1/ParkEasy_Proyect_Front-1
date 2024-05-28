@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:go_router/go_router.dart';
-import 'package:memes/config/router/app_router.dart';
-import 'package:memes/config/theme/app_theme.dart';
+import 'package:parkeasy/config/router/app_router.dart';
+import 'package:parkeasy/config/theme/app_theme.dart';
 // Importa el paquete shared_preferences
 
 void main() {

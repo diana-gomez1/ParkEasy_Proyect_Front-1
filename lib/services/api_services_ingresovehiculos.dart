@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:memes/models/espacioestacionamiento.dart';
-import 'package:memes/models/ingreso_vehiculos.dart';
+import 'package:parkeasy/models/espacioestacionamiento.dart';
+import 'package:parkeasy/models/ingreso_vehiculos.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

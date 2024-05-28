@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:memes/models/espacioestacionamiento.dart';
-import 'package:memes/services/api_services_espacioestacionamiento.dart';
+import 'package:parkeasy/models/espacioestacionamiento.dart';
+import 'package:parkeasy/services/api_services_espacioestacionamiento.dart';
 
 class EspacioEstacionamientoListView extends StatefulWidget {
   const EspacioEstacionamientoListView({super.key});

@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:memes/models/espacioestacionamiento.dart';
-import 'package:memes/services/api_services_espacioestacionamiento.dart';
-import 'package:memes/services/api_services_tipovehiculo.dart';
-import 'package:memes/models/tipovehiculo.dart';
+import 'package:parkeasy/models/espacioestacionamiento.dart';
+import 'package:parkeasy/services/api_services_espacioestacionamiento.dart';
+import 'package:parkeasy/services/api_services_tipovehiculo.dart';
+import 'package:parkeasy/models/tipovehiculo.dart';
 
 class EspacioEstacionamientoFormPage extends StatefulWidget {
   final EspacioEstacionamiento? espacioEstacionamiento;

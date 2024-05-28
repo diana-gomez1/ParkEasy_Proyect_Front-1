@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:memes/models/caja.dart';
+import 'package:parkeasy/models/caja.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

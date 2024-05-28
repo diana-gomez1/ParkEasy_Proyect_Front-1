@@ -1,5 +1,5 @@
-name: memes
-description: "A new Flutter project."
+name: parkeasy
+description: "A new Flutter project about a parking lot."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -35,17 +35,19 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   go_router: ^14.1.1
   google_fonts: ^6.2.1
+  flutter_native_splash: ^2.0.5
   http: ^1.2.1
   iconly: ^1.0.1
   intl: ^0.19.0
   shared_preferences: ^2.2.3
   provider: ^6.0.0
-
+  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
+    
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -61,7 +63,10 @@ flutter:
     - assets/loaders/
     - assets/images/
     - assets/images/logo.png
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

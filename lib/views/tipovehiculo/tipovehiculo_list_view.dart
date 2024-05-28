@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:memes/models/tipovehiculo.dart';
-import 'package:memes/services/api_services_tipovehiculo.dart';
-//import 'package:memes/config/theme/app_theme.dart';
+import 'package:parkeasy/models/tipovehiculo.dart';
+import 'package:parkeasy/services/api_services_tipovehiculo.dart';
+//import 'package:parkeasy/config/theme/app_theme.dart';
 
 class TipoVehiculoListView extends StatefulWidget {
   const TipoVehiculoListView({super.key});
