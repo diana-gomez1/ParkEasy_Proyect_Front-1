@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart'; // Asegúrate de importar este paquete
 import 'package:memes/models/factura.dart';
 import 'package:memes/services/api_services_caja.dart';
 import 'package:memes/services/api_services_factura.dart';
@@ -91,6 +92,12 @@ class _FacturaListViewState extends State<FacturaListView> {
               itemCount: facturas.length,
               itemBuilder: (context, index) {
                 final factura = facturas[index];
+                // Formatear la fecha de salida, manejar el caso null
+                final formattedFechaSalida = factura.fechaSalida != null
+                    ? DateFormat('dd/MM/yyyy HH:mm')
+                        .format(factura.fechaSalida!)
+                    : 'Fecha no disponible';
+
                 return Card(
                   margin:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -112,6 +119,10 @@ class _FacturaListViewState extends State<FacturaListView> {
                         _buildInfoRow(
                           'Monto a Pagar:',
                           '\$${factura.montoPagar}',
+                        ),
+                        _buildInfoRow(
+                          'Fecha de Salida:',
+                          formattedFechaSalida,
                         ),
                       ],
                     ),
