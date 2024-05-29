@@ -15,8 +15,9 @@ class FacturaFormPage extends StatefulWidget {
 
   const FacturaFormPage({super.key, this.factura});
 
-  static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
-
+  // static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+// Red Docentes
+  static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
   @override
   _FacturaFormPageState createState() => _FacturaFormPageState();
 }

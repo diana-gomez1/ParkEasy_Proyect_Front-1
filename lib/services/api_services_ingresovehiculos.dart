@@ -5,8 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiServiceIngresoVehiculos {
-  static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
-
+  //static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+// Red Docentes
+  static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
   Future<List<IngresoVehiculos>> getIngresoVehiculos() async {
     final response = await http.get(Uri.parse('$baseUrl/ingresovehiculosver'));
     if (response.statusCode == 200) {

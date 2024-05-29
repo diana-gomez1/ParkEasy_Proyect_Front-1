@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:parkeasy/models/establecimiento.dart';
 
 class ApiServiceEstablecimiento {
-  static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+  //static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
   // Red Docentes
-  //static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
+  static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
 
   Future<List<Establecimiento>> getEstablecimiento() async {
     final response = await http.get(Uri.parse('$baseUrl/establecimientover'));

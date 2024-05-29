@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 
 class ApiServiceCaja {
   // CASA
-  static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
+  //static const String baseUrl = 'http://192.168.18.243/memesapp/public/api/v1';
   // Red Docentes
-  //static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
+  static const String baseUrl = 'http://192.168.12.216/memesapp/public/api/v1';
 
   Future<List<Caja>> getCaja() async {
     final response = await http.get(Uri.parse('$baseUrl/cajaver'));
